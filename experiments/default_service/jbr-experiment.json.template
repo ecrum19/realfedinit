@@ -10,10 +10,23 @@
   "queryRunnerReplication": 3,
   "queryRunnerWarmupRounds": 1,
   "queryRunnerRequestDelay": 0,
+  "queryRunnerRecordTimestamps": true,
+  "queryRunnerRecordHttpRequests": true,
   "queryRunnerEndpointAvailabilityCheckTimeout": 1000,
   "queryRunnerUrlParams": {},
   "hookSparqlEndpoint": {
     "@id": "urn:jbr:default_service:hookSparqlEndpoint",
-    "@type": "HookNonConfigured"
+    "@type": "HookSparqlEndpointComunica",
+    "dockerfileClient": "input/dockerfiles/Dockerfile-client",
+    "resourceConstraints": {
+      "@type": "StaticDockerResourceConstraints",
+      "cpu_percentage": 100
+    },
+    "configClient": "input/config-client.json",
+    "contextClient": "input/context-client.json",
+    "clientPort": 3001,
+    "clientLogLevel": "info",
+    "queryTimeout": 120,
+    "maxMemory": 8192
   }
 }

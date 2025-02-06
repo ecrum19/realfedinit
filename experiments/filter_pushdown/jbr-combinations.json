@@ -4,6 +4,8 @@
   ],
   "@id": "urn:jbr:filter_pushdown-combinations",
   "@type": "FullFactorialCombinationProvider",
-  "commonGenerated": false,
-  "factors": {}
+  "commonGenerated": true,
+  "factors": {
+    "type": [ "filter-pushdown-a", "filter-pushdown-d" ]
+  }
 }

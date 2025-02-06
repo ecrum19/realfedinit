@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@jbr-hook/sparql-endpoint-comunica": "^5.4.1",
+    "jbr": "^5.4.1"
+  },
+  "scripts": {
+    "jbr": "jbr"
+  },
+  "name": "realfedsurvey",
+  "version": "1.0.0",
+  "lsd:module": true
+}
