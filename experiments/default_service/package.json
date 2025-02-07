@@ -3,6 +3,7 @@
   "name": "default_service",
   "dependencies": {
     "@jbr-experiment/sparql-custom": "^5.4.1",
+    "@jbr-hook/sparql-endpoint-comunica": "^5.4.1",
     "cross-env": "^7.0.3",
     "jbr": "^5.4.1"
   },

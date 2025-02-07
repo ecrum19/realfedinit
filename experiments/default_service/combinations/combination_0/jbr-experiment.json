@@ -1,7 +1,8 @@
 {
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/jbr/^5.0.0/components/context.jsonld",
-    "https://linkedsoftwaredependencies.org/bundles/npm/@jbr-experiment/sparql-custom/^5.0.0/components/context.jsonld"
+    "https://linkedsoftwaredependencies.org/bundles/npm/@jbr-experiment/sparql-custom/^5.0.0/components/context.jsonld",
+    "https://linkedsoftwaredependencies.org/bundles/npm/@jbr-hook/sparql-endpoint-comunica/^5.0.0/components/context.jsonld"
   ],
   "@id": "urn:jbr:default_service:combination_0",
   "@type": "ExperimentSparqlCustom",
@@ -14,6 +15,18 @@
   "queryRunnerUrlParams": {},
   "hookSparqlEndpoint": {
     "@id": "urn:jbr:default_service:combination_0:hookSparqlEndpoint",
-    "@type": "HookNonConfigured"
+    "@type": "HookSparqlEndpointComunica",
+    "dockerfileClient": "input/dockerfiles/Dockerfile-client",
+    "resourceConstraints": {
+      "@type": "StaticDockerResourceConstraints",
+      "cpu_percentage": 100
+    },
+    "configClient": "input/config-client.json",
+    "contextClient": "input/context-client.json",
+    "additionalBinds": [],
+    "clientPort": 3001,
+    "clientLogLevel": "info",
+    "queryTimeout": 300,
+    "maxMemory": 8192
   }
 }
