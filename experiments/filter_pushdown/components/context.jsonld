@@ -3,7 +3,7 @@
     "https://linkedsoftwaredependencies.org/bundles/npm/componentsjs/^5.0.0/components/context.jsonld",
     {
       "npmd": "https://linkedsoftwaredependencies.org/bundles/npm/",
-      "rfs": "npmd:realfedsurvey/^1.0.0/"
+      "rfs": "npmd:default_service/^1.0.0/"
     }
   ]
 }
