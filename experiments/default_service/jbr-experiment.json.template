@@ -7,10 +7,7 @@
   "@id": "urn:jbr:default_service",
   "@type": "ExperimentSparqlCustom",
   "queriesPath": "input/queries/",
-  "queryRunnerReplication": 3,
   "queryRunnerWarmupRounds": 1,
-  "queryRunnerRequestDelay": 0,
-  "queryRunnerEndpointAvailabilityCheckTimeout": 1000,
   "queryRunnerUrlParams": {},
   "hookSparqlEndpoint": {
     "@id": "urn:jbr:default_service:hookSparqlEndpoint",
