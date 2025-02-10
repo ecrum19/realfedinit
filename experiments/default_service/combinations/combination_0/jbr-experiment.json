@@ -7,7 +7,6 @@
   "@id": "urn:jbr:default_service:combination_0",
   "@type": "ExperimentSparqlCustom",
   "queriesPath": "input/queries/",
-  "endpointUrl": "http://localhost:3000/sparql",
   "queryRunnerReplication": 3,
   "queryRunnerWarmupRounds": 1,
   "queryRunnerRequestDelay": 0,
