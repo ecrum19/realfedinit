@@ -9,6 +9,7 @@
   "queriesPath": "input/queries/",
   "queryRunnerWarmupRounds": 1,
   "queryRunnerUrlParams": {},
+  "endpointUrl": "http://localhost:3001/sparql"
   "hookSparqlEndpoint": {
     "@id": "urn:jbr:default_service:hookSparqlEndpoint",
     "@type": "HookSparqlEndpointComunica",
