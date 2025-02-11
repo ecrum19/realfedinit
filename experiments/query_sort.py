@@ -2,16 +2,16 @@ import os
 import json
 import sys
 
-## TODO: Split REGULAR and NO SERVICE clauses into separate functions
 ## TODO: Look into using rdflib-sparql parser (https://github.com/RDFLib/rdflib-sparql/blob/master/rdflib_sparql/parser.py)
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python3 query-sort.py <input_json_file> <output_path>")
+    if len(sys.argv) < 3:
+        print("Usage: python3 query-sort.py <input_json_file> <output_path> [service / noservice]")
         sys.exit(1)
 
     input_file = sys.argv[1]
     output_directory = sys.argv[2]
+    service_type = sys.argv[3]
     # checks input file validity
     try:
         with open(input_file, 'r', encoding='utf-8') as f:
@@ -31,8 +31,15 @@ def main():
         print("JSON file does not contain a top-level 'data' key.")
         sys.exit(1)
 
-    # withService(json_data, output_directory)
-    withoutService(json_data, output_directory)
+    if service_type not in ["service", "noservice"]:
+        print("Sort option not supported, please use 'service or 'noservice' as third argument")
+        sys.exit(1)
+
+    if service_type == "service":
+        withService(json_data, output_directory)
+    
+    if service_type == "noservice":
+        withoutService(json_data, output_directory)
     
 
 def withService(data, out_directory):
@@ -41,7 +48,12 @@ def withService(data, out_directory):
     
     past_names = []
     for item_key, item_value in data["data"].items():
-        s_query_text = item_value.get("query")
+        s_query_text = item_value.get("query").split('\n')
+        fix_prefix_s_query_text = ''
+        for i in s_query_text:
+            if i != '':
+                fix_prefix_s_query_text += f"\n{i}"
+        
         s_query_source = item_value.get("target")
 
         if s_query_text is None:
@@ -68,7 +80,7 @@ def withService(data, out_directory):
         # for with SERVICE descriptions
         try:
             with open(s_full_output_path, 'w', encoding='utf-8') as out_file:
-                out_file.write("# Datasources: %s\n%s" % (s_query_source, s_query_text))
+                out_file.write("# Datasources: %s%s" % (s_query_source, fix_prefix_s_query_text))
             # print(f"Created file: {output_filename}")
         except Exception as e:
             print(f"Error writing {s_output_filename}: {e}")
