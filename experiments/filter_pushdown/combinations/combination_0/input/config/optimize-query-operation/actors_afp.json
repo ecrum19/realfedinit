@@ -1,7 +1,7 @@
 {
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/runner/^4.0.0/components/context.jsonld",
-    
+
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-optimize-query-operation-describe-to-constructs-subject/^4.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-optimize-query-operation-assign-sources-exhaustive/^4.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@comunica/actor-optimize-query-operation-join-bgp/^4.0.0/components/context.jsonld",
@@ -76,7 +76,7 @@
     {
       "@id": "urn:comunica:default:optimize-query-operation/actors#filter-pushdown",
       "@type": "ActorOptimizeQueryOperationFilterPushdown",
-      "aggressivePushdown": false,
+      "aggressivePushdown": true,
       "beforeActors": [
         { "@id": "urn:comunica:default:optimize-query-operation/actors#group-sources" }
       ]

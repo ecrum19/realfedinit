@@ -6,6 +6,6 @@
   "@type": "FullFactorialCombinationProvider",
   "commonGenerated": true,
   "factors": {
-    "type": [ "filter-pushdown-a", "filter-pushdown-d" ]
+    "type": [ "filter-pushdown-a" ]
   }
 }
