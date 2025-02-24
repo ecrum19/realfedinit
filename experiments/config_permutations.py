@@ -145,6 +145,40 @@ def changeExptTemplate(current_template_file, combos_added):
     with open(current_template_file, 'w') as f:
         f.writelines(updated_lines)
 
+
+def changeCombJson(current_comb_file, combos_added):
+    """
+    creates new client config files with the new config files in the "additionalBinds" input for permutations
+    """
+    with open(current_comb_file, 'r') as f:
+        lines = f.readlines()
+
+    target_line = '"factors":'
+    # Create a new list of lines with the target lines replaced.
+    updated_lines = []
+    for line in lines:
+        
+        # find targeted line config
+        if target_line in line:
+            updated_lines.append('\t"factors": {\n')
+            updated_lines.append('\t\t"type": [ ')
+            # add combos to the list
+            for comb in combos_added:
+                file_name = f"{comb.optimize_config}_{comb.join_config}"
+                if combos_added.index(comb) < len(combos_added)-1:
+                    updated_lines.append(f'"{file_name}", ')
+                else:
+                    updated_lines.append(f'"{file_name}" ]\n')
+
+            updated_lines.append("\t}\n")
+        # all other lines
+        else:
+            updated_lines.append(line)
+    
+    # Write the updated lines to the output file.
+    with open(current_comb_file, 'w') as f:
+        f.writelines(updated_lines)
+
 def main():
     if len(sys.argv) < 3:
         print("Usage: python3 config_permutations.py <aglorithm_dir> <options_dir>")
@@ -170,6 +204,7 @@ def main():
 
     writeClientConfigs(algoNames, optionNames, algoFiles, optionFiles, all_combos)
     changeExptTemplate("no_service_combos/jbr-experiment.json.template", all_combos)
+    changeCombJson("no_service_combos/jbr-combinations.json", all_combos)
 
 
 
