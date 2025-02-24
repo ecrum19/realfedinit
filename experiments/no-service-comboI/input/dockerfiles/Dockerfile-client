@@ -1,4 +1,4 @@
-FROM comunica/query-sparql:v2.5.0
+FROM comunica/query-sparql@sha256:1105799b5b19aeada8f6d1ba7d7d6e5004c3367b5cf10e1bbf0d0e1be3495a71
 
 ARG CONFIG_CLIENT
 ARG QUERY_TIMEOUT
@@ -16,4 +16,4 @@ ENV LOG_LEVEL=$LOG_LEVEL
 EXPOSE 3000
 
 ENTRYPOINT []
-CMD [ "/bin/sh", "-c", "node --max-old-space-size=$MAX_MEMORY ./bin/http.js -c /tmp/context.json -p 3000 -t $QUERY_TIMEOUT -l $LOG_LEVEL -i" ]
+CMD [ "/bin/sh", "-c", "node --max-old-space-size=$MAX_MEMORY ./bin/http.js -c /tmp/context.json -p 3000 -t $QUERY_TIMEOUT -l $LOG_LEVEL --contextOverride -i" ]
