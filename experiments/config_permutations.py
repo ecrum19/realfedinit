@@ -92,7 +92,7 @@ def writeClientConfigs(algorithm_names, option_names, algoithm_files, option_fil
     """
     creates new client config files with the changes based on permutations
     """
-    default_config = "no_service_combos/input/client-config/default.json"
+    default_config = "../config/default.json"
     output_path = "no_service_combos/input/client-config/"
     for combo in config_combos:
         # name of the current configs
