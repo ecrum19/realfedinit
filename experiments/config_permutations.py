@@ -1,7 +1,6 @@
 import os
 import json
 import sys
-import itertools
 
 def listFilePaths(directory):
     """Return a sorted list of file paths in the given directory."""
@@ -88,12 +87,12 @@ def determinePermutations(algorithms, options):
     return combinations
 
 
-def writeClientConfigs(algorithm_names, option_names, algoithm_files, option_files, config_combos):
+def writeClientConfigs(in_path, algorithm_names, option_names, algoithm_files, option_files, config_combos):
     """
     creates new client config files with the changes based on permutations
     """
     default_config = "../config/default.json"
-    output_path = "no_service_combos/input/client-config/"
+    output_path = f"{in_path}client-config/"
     for combo in config_combos:
         # name of the current configs
         wanted_option = combo.optimize_config
@@ -112,11 +111,10 @@ def writeClientConfigs(algorithm_names, option_names, algoithm_files, option_fil
         new_config(default_config, wanted_option_config, wanted_algo_config, outfile)
 
 
-def changeExptTemplate(current_template_file, combos_added):
+def changeExptTemplate(current_path, current_template_file, combos_added):
     """
     creates new client config files with the new config files in the "additionalBinds" parameter for permutations
     """
-    current_path = "no_service_combos/input/config/"
     with open(current_template_file, 'r') as f:
         lines = f.readlines()
 
@@ -127,16 +125,16 @@ def changeExptTemplate(current_template_file, combos_added):
         
         # find targeted line config
         if target_line in line:
-            updated_lines.append('\t\t"additionalBinds": [\n')
+            updated_lines.append('\t"additionalBinds": [\n')
             # add combos to the list
             for comb in combos_added:
                 file_name = f"{comb.optimize_config}_{comb.join_config}.json"
                 if combos_added.index(comb) < len(combos_added)-1:
-                    updated_lines.append(f'\t\t\t"{current_path}{file_name}:/tmp/{file_name}",\n')
+                    updated_lines.append(f'\t\t"{current_path}{file_name}:/tmp/{file_name}",\n')
                 else:
-                    updated_lines.append(f'\t\t\t"{current_path}{file_name}:/tmp/{file_name}"\n')
+                    updated_lines.append(f'\t\t"{current_path}{file_name}:/tmp/{file_name}"\n')
 
-            updated_lines.append("\t\t],\n")
+            updated_lines.append("\t],\n")
         # all other lines
         else:
             updated_lines.append(line)
@@ -187,6 +185,12 @@ def main():
     # directories to algorithm and options directories
     algos_dir = sys.argv[1]
     options_dir = sys.argv[2]
+    dir_list = algos_dir.split('/')
+    
+    expt_dir = dir_list[0]+'/'
+    input_dir = '/'.join(dir_list[:2]) + '/'
+    config_dir = '/'.join(dir_list[:3]) + '/'
+
 
     # all config paths
     allAlgoPaths = listFilePaths(algos_dir)
@@ -202,9 +206,9 @@ def main():
 
     all_combos = determinePermutations(algoNames, optionNames)
 
-    writeClientConfigs(algoNames, optionNames, algoFiles, optionFiles, all_combos)
-    changeExptTemplate("no_service_combos/jbr-experiment.json.template", all_combos)
-    changeCombJson("no_service_combos/jbr-combinations.json", all_combos)
+    writeClientConfigs(input_dir, algoNames, optionNames, algoFiles, optionFiles, all_combos)
+    changeExptTemplate(config_dir, f"{expt_dir}jbr-experiment.json.template", all_combos)
+    changeCombJson(f"{expt_dir}jbr-combinations.json", all_combos)
 
 
 
