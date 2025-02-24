@@ -4,7 +4,7 @@
     "https://linkedsoftwaredependencies.org/bundles/npm/@jbr-experiment/sparql-custom/^5.0.0/components/context.jsonld",
     "https://linkedsoftwaredependencies.org/bundles/npm/@jbr-hook/sparql-endpoint-comunica/^5.0.0/components/context.jsonld"
   ],
-  "@id": "urn:jbr:filter_pushdown",
+  "@id": "urn:jbr:no_service_combos",
   "@type": "ExperimentSparqlCustom",
   "queriesPath": "input/queries/",
   "endpointUrl": "http://localhost:3001/sparql",
@@ -14,7 +14,7 @@
   "queryRunnerEndpointAvailabilityCheckTimeout": 1000,
   "queryRunnerUrlParams": {},
   "hookSparqlEndpoint": {
-    "@id": "urn:jbr:filter_pushdown:hookSparqlEndpoint",
+    "@id": "urn:jbr:no_service_combos:hookSparqlEndpoint",
     "@type": "HookSparqlEndpointComunica",
     "dockerfileClient": "input/dockerfiles/Dockerfile-client",
     "resourceConstraints": {
