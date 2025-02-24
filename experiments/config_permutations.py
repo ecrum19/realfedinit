@@ -114,7 +114,7 @@ def writeClientConfigs(algorithm_names, option_names, algoithm_files, option_fil
 
 def changeExptTemplate(current_template_file, combos_added):
     """
-    creates new client config files with the new config files in the "additionalBinds" input for permutations
+    creates new client config files with the new config files in the "additionalBinds" parameter for permutations
     """
     current_path = "no_service_combos/input/config/"
     with open(current_template_file, 'r') as f:
@@ -148,7 +148,7 @@ def changeExptTemplate(current_template_file, combos_added):
 
 def changeCombJson(current_comb_file, combos_added):
     """
-    creates new client config files with the new config files in the "additionalBinds" input for permutations
+    creates new jbr-combinations.json file with the new configs specified in the "type" parameter
     """
     with open(current_comb_file, 'r') as f:
         lines = f.readlines()

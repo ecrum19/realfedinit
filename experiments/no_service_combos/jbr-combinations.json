@@ -2,7 +2,7 @@
   "@context": [
     "https://linkedsoftwaredependencies.org/bundles/npm/jbr/^5.0.0/components/context.jsonld"
   ],
-  "@id": "urn:jbr:filter_pushdown-combinations",
+  "@id": "urn:jbr:no_service_combos-combinations",
   "@type": "FullFactorialCombinationProvider",
   "commonGenerated": true,
 	"factors": {
