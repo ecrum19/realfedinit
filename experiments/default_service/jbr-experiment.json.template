@@ -8,7 +8,7 @@
   "@type": "ExperimentSparqlCustom",
   "queriesPath": "input/queries/",
   "endpointUrl": "http://localhost:3001/sparql",
-  "queryRunnerReplication": 3,
+  "queryRunnerReplication": 0,
   "queryRunnerWarmupRounds": 1,
   "queryRunnerRequestDelay": 0,
   "queryRunnerEndpointAvailabilityCheckTimeout": 1000,
@@ -24,7 +24,7 @@
     "configClient": "input/config-client.json",
     "contextClient": "input/context-client.json",
     "additionalBinds": [],
-    "clientPort": 3000,
+    "clientPort": 3001,
     "clientLogLevel": "info",
     "queryTimeout": 300,
     "maxMemory": 8192

@@ -23,7 +23,7 @@
     },
     "configClient": "input/client-config/%FACTOR-type%.json",
     "contextClient": "input/context-client.json",
-    "additionalBinds": ["/input/config/optimize-query-operation/actors_dfp.json:/tmp/actors_dfp.json"],
+		"additionalBinds": [],
     "clientPort": 3001,
     "clientLogLevel": "info",
     "queryTimeout": 300,

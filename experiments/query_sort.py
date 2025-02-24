@@ -51,7 +51,7 @@ def withService(data, out_directory):
         s_query_text = item_value.get("query").split('\n')
         fix_prefix_s_query_text = ''
         for i in s_query_text:
-            if i != '':
+            if i.strip() != '':
                 fix_prefix_s_query_text += f"\n{i}"
         
         s_query_source = item_value.get("target")
@@ -141,7 +141,8 @@ def withoutService(data, out_directory):
             
             # for normal query lines
             else:
-                ns_query_text += "%s\n" % line
+                if line.strip() != '':
+                    ns_query_text += "%s\n" % line
 
 
         # Generate a safe filename.
@@ -164,7 +165,7 @@ def withoutService(data, out_directory):
         # for without SERVICE descriptions
         try:
             with open(ns_full_output_path, 'w', encoding='utf-8') as out_file:
-                out_file.write("# Datasources: %s\n%s" % (ns_query_source, ns_query_text))
+                out_file.write("# Datasources: %s\n%s" % (ns_query_source, ns_query_text.rstrip('\n')))
             # print(f"Created file: {output_filename}")
         except Exception as e:
             print(f"Error writing {ns_output_filename}: {e}")
