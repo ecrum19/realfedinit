@@ -141,6 +141,15 @@ def changeExptTemplate(algo_path, option_path, algo_configs, option_configs, cur
                 else:
                     updated_lines.append(f'\t\t"/{option_input_path}/{ofile}:/tmp/{ofile}"\n')
             updated_lines.append("\t],\n")
+        
+        # change replication number
+        elif '"queryRunnerReplication":' in line:
+            updated_lines.append('\t"queryRunnerReplication": 1,\n')
+
+        # specify configs to use for experiment
+        elif '"configClient":' in line:
+            updated_lines.append('\t"configClient": "input/client-config/%FACTOR-type%.json",\n')
+            
         # all other lines
         else:
             updated_lines.append(line)
@@ -188,6 +197,32 @@ def changeCombJson(current_comb_file, combos_added):
     with open(current_comb_file, 'w') as f:
         f.writelines(updated_lines)
 
+
+def changeDockerFile(current_docker_file):
+    """
+    changes Dockerfile-client for expt
+    """
+    with open(current_docker_file, 'r') as f:
+        lines = f.readlines()
+
+    # Create a new list of lines with the target lines replaced.
+    updated_lines = []
+    for line in lines:
+        # changes Comunica version used
+        if "FROM" in line:
+            updated_lines.append("FROM comunica/query-sparql@sha256:1105799b5b19aeada8f6d1ba7d7d6e5004c3367b5cf10e1bbf0d0e1be3495a71\n")
+        # changes docker command to include "--contextOverride"
+        elif "CMD" in line:
+            updated_lines.append(
+                'CMD [ "/bin/sh", "-c", "node --max-old-space-size=$MAX_MEMORY ./bin/http.js -c /tmp/context.json -p 3000 -t $QUERY_TIMEOUT -l $LOG_LEVEL --contextOverride -i" ]\n')
+         # all other lines
+        else:
+            updated_lines.append(line)
+
+    # Write the updated lines to the output file.
+    with open(current_docker_file, 'w') as f:
+        f.writelines(updated_lines)
+
 def main():
     if len(sys.argv) < 3:
         print("Usage: python3 config_permutations.py <aglorithm_dir> <options_dir>")
@@ -200,6 +235,8 @@ def main():
     
     expt_dir = dir_list[0]+'/'
     input_dir = '/'.join(dir_list[:2]) + '/'
+    docker_dir = f'{input_dir}dockerfiles/'
+    print(docker_dir)
 
     # all config paths
     allAlgoPaths = listFilePaths(algos_dir)
@@ -215,6 +252,7 @@ def main():
 
     all_combos = determinePermutations(algoNames, optionNames)
 
+    changeDockerFile(docker_dir+"Dockerfile-client")
     writeClientConfigs(input_dir, algoNames, optionNames, algoFiles, optionFiles, all_combos)
     changeExptTemplate(algos_dir, options_dir, algoFiles, optionFiles, f"{expt_dir}jbr-experiment.json.template")
     changeCombJson(f"{expt_dir}jbr-combinations.json", all_combos)

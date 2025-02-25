@@ -8,7 +8,7 @@
   "@type": "ExperimentSparqlCustom",
   "queriesPath": "input/queries/",
   "endpointUrl": "http://localhost:3001/sparql",
-  "queryRunnerReplication": 1,
+	"queryRunnerReplication": 1,
   "queryRunnerWarmupRounds": 1,
   "queryRunnerRequestDelay": 0,
   "queryRunnerEndpointAvailabilityCheckTimeout": 1000,
@@ -21,8 +21,8 @@
       "@type": "StaticDockerResourceConstraints",
       "cpu_percentage": 100
     },
-    "configClient": "input/client-config/%FACTOR-type%.json",
-    "contextClient": "input/context-client.json",
+	"configClient": "input/client-config/%FACTOR-type%.json",
+  "contextClient": "input/context-client.json",
 	"additionalBinds": [
 		"/input/config/rdf-join/asym-hash.json:/tmp/asym-hash.json",
 		"/input/config/rdf-join/bind.json:/tmp/bind.json",
