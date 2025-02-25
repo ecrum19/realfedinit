@@ -78,8 +78,8 @@ def determinePermutations(algorithms, options):
     Returns all config file permutations as a list of Objects
     """
     combinations = []
-    for a in algorithms:
-        for o in options:
+    for a in algorithms[:1]:
+        for o in options[:4]:
             combinations.append(Config(
                 optimize_config=o,
                 join_config=a
@@ -111,12 +111,17 @@ def writeClientConfigs(in_path, algorithm_names, option_names, algoithm_files, o
         new_config(default_config, wanted_option_config, wanted_algo_config, outfile)
 
 
-def changeExptTemplate(current_path, current_template_file, combos_added):
+def changeExptTemplate(algo_path, option_path, algo_configs, option_configs, current_template_file):
     """
     creates new client config files with the new config files in the "additionalBinds" parameter for permutations
     """
     with open(current_template_file, 'r') as f:
         lines = f.readlines()
+
+    algo_split = algo_path.split('/')
+    option_split = option_path.split('/')
+    algo_input_path = '/'.join(algo_split[1:])
+    option_input_path = '/'.join(option_split[1:])
 
     target_line = '"additionalBinds": [],'
     # Create a new list of lines with the target lines replaced.
@@ -126,14 +131,15 @@ def changeExptTemplate(current_path, current_template_file, combos_added):
         # find targeted line config
         if target_line in line:
             updated_lines.append('\t"additionalBinds": [\n')
-            # add combos to the list
-            for comb in combos_added:
-                file_name = f"{comb.optimize_config}_{comb.join_config}.json"
-                if combos_added.index(comb) < len(combos_added)-1:
-                    updated_lines.append(f'\t\t"{current_path}{file_name}:/tmp/{file_name}",\n')
+            # add algorithm configs
+            for afile in algo_configs:
+                updated_lines.append(f'\t\t"/{algo_input_path}/{afile}:/tmp/{afile}",\n')
+            # add option configs
+            for ofile in option_configs:
+                if option_configs.index(ofile) < len(option_configs)-1:
+                    updated_lines.append(f'\t\t"/{option_input_path}/{ofile}:/tmp/{ofile}",\n')
                 else:
-                    updated_lines.append(f'\t\t"{current_path}{file_name}:/tmp/{file_name}"\n')
-
+                    updated_lines.append(f'\t\t"/{option_input_path}/{ofile}:/tmp/{ofile}"\n')
             updated_lines.append("\t],\n")
         # all other lines
         else:
@@ -189,8 +195,6 @@ def main():
     
     expt_dir = dir_list[0]+'/'
     input_dir = '/'.join(dir_list[:2]) + '/'
-    config_dir = '/'.join(dir_list[:3]) + '/'
-
 
     # all config paths
     allAlgoPaths = listFilePaths(algos_dir)
@@ -207,7 +211,7 @@ def main():
     all_combos = determinePermutations(algoNames, optionNames)
 
     writeClientConfigs(input_dir, algoNames, optionNames, algoFiles, optionFiles, all_combos)
-    changeExptTemplate(config_dir, f"{expt_dir}jbr-experiment.json.template", all_combos)
+    changeExptTemplate(algos_dir, options_dir, algoFiles, optionFiles, f"{expt_dir}jbr-experiment.json.template")
     changeCombJson(f"{expt_dir}jbr-combinations.json", all_combos)
 
 
