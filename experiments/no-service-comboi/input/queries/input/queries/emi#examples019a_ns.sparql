@@ -27,7 +27,8 @@ WHERE {
 		OPTIONAL { 
 			?intxn2 dcterms:bibliographicCitation ?study1_DOI . 		#optionally retrieve the doi of the study for parasitoid-parasite pairs
 		}
-	}}
+			}
+	}
 	?parasiteX1 emi:inTaxon ?parasiteX_WD .						#check pasarsiteX1 is in wikidata-id parasiteX_WD (the ones obtained from interaction-pairs part-1)
 	?intxn3 emi:hasSource ?parasiteX1 ; 						#retrieve interaction pairs part-2
     		emi:hasTarget ?hostPlant ;

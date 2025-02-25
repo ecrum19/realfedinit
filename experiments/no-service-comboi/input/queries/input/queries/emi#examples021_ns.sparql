@@ -32,7 +32,8 @@ SELECT DISTINCT ?sourceWD ?sourceNameURI ?intxnName ?targetWD ?targetNameURI ?lo
                       emi:isInChIKey2DOf ?ik .
                 ?ik emi:isInChIKeyOf ?wd_chem .
                 VALUES ?wd_chem { wd:Q27107580 }		#filter on the wikidata-id of Onpordopicrin
-        }} UNION						#union with the lotus metabolite data from wikidata
+			}
+        } UNION						#union with the lotus metabolite data from wikidata
 		?wd_chem wdt:P235 ?ik ;
    			 wdt:P703 ?targetWD .
 		 VALUES ?wd_chem { wd:Q27107580 }

@@ -36,7 +36,8 @@
                         	?ik2d emi:hasSMILES ?smiles ;
                                       emi:isInChIKey2DOf ?ik .
                       		?ik emi:isInChIKeyOf ?wd_chem .					#retrieve wikidata-ids for metabolites
-                      }} UNION									#union with data from lotus (integrated in wikidata)
+			}
+                      } UNION									#union with data from lotus (integrated in wikidata)
 		      		?wd_chem wdt:P235 ?ik ;
 					 wdt:P703 ?targetWD .			
 		      BIND(REPLACE(STR(?sourceName), "%20", " ") AS ?sourceNameX)		#remove percent encodings from the sourceName

@@ -34,7 +34,8 @@ PREFIX emi: <https://purl.org/emi#>
 				?ik2d emi:hasSMILES ?smiles ;
 		    		      emi:isInChIKey2DOf ?structure_inchikey .
 				?structure_inchikey emi:isInChIKeyOf ?wd_chem .			#retrieve wikidata-ids for metabolites
-			}}
+			}
+			}
 			UNION									#union with data from lotus (integrated in wikidata)
 			 	?wd_chem wdt:P235 ?structure_inchikey;				
    			 		 wdt:P703 ?source_wdx .	

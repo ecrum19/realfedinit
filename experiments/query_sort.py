@@ -139,6 +139,11 @@ def withoutService(data, out_directory):
                     curr_service = False
                     brace_count = 0
             
+            # fix double bracket syntax
+            elif "}}" in line:
+                rm_one_bracket = line.replace("}}", "}")
+                ns_query_text += "\t\t\t}\n%s\n" % rm_one_bracket
+
             # for normal query lines
             else:
                 if line.strip() != '':

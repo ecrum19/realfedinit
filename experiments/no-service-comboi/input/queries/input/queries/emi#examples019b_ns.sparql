@@ -25,7 +25,8 @@ WHERE {
 				     sosa:isSampleOf ?parasitoidName .				#retrieve scientific name of parasitoidX as listed in GloBI
 			?parasiteX emi:inTaxon ?parasiteX_WD ;					#retreieve wikidata-ids for parasiteX
 				   sosa:isSampleOf ?parasiteName .				#retreieve scientific name for parasiteX as listed in GloBI
-	    	}}
+			}
+	    	}
 		?parasiteX1 emi:inTaxon ?parasiteX_WD .						#check pasarsiteX1 is in wikidata-id parasiteX_WD (the ones obtained from interaction-pairs part-1)
 		?intxn3 emi:hasSource ?parasiteX1 ; 						#retrieve interaction pairs part-2
     			emi:hasTarget ?hostPlant ;
@@ -58,7 +59,8 @@ WHERE {
                       emi:hasClass ?npcClass .
                 ?structure_inchikey emi:isInChIKeyOf ?wd_chem .					#retrieve wikidata-ids for metabolites
 		FILTER (REGEX(STR(?npcClass), "TERPEN"))					#keep if the class of metabolite is terpenes matches "TERPEN"
-         }} UNION										#union with data from lotus (integrated in wikidata)
+			}
+         } UNION										#union with data from lotus (integrated in wikidata)
 		 ?wd_chem wdt:P235 ?structure_inchikey ;
                		  wdt:P703 ?hostPlant_WD ; 
                           ((wdt:P31|wdt:P279)/(wdt:P279*)) ?class .				#retrieve the class of the metabolite

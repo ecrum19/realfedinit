@@ -16,7 +16,8 @@ PREFIX emi: <https://purl.org/emi#>
 					sosa:isSampleOf ?sourceName . 	  	#scientific name of source as given in GloBI
                 		?target emi:inTaxon ?wdx_Target ;	  	#retrieve wikidata-id for target
 					sosa:isSampleOf ?targetName . 		#scientific name of target as given in GloBI
-			}}
+			}
+			}
                  		{
                  			?wdx_Source wdt:P141 wd:Q719675 ;		#filter source wikidata ids, which have IUCN status (wdt:P141) as near threatened (wd:Q719675) and which is a plant
                  				    wdt:P171* wd:Q879246 . 

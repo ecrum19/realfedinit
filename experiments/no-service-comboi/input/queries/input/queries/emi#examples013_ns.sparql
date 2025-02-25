@@ -27,7 +27,8 @@
 				?npcClass skos:broader ?npcSuperClass .
 		        	?ik emi:isInChIKeyOf ?wd_chem .					#retrieve wikidata-ids for metabolites
 				FILTER (REGEX(STR(?npcSuperClass), "DITERPENOIDS"))
-		        }} UNION								#union with data from lotus (integrated in wikidata)
+			}
+		        } UNION								#union with data from lotus (integrated in wikidata)
 			 	?wd_chem wdt:P235 ?structure_inchikey ;
 			 		 ((wdt:P31|wdt:P279)/(wdt:P279*)) wd:Q47006367 ;	#check if the class/superclass of the chemical is Diterpenoids
    			 		 wdt:P703 ?source_wdx .
