@@ -6,6 +6,6 @@
   "@type": "FullFactorialCombinationProvider",
   "commonGenerated": true,
 	"factors": {
-		"type": [ "aggfp-ask_asym-hash", "aggfp-def_asym-hash", "def-ask_asym-hash", "def-count_asym-hash" ]
+		"type": [ "aggfp-ask_asym-hash", "aggfp-def_asym-hash", "def-ask_asym-hash", "def-count_asym-hash", "aggfp-ask_bind", "aggfp-def_bind", "def-ask_bind", "def-count_bind", "aggfp-ask_default-b24", "aggfp-def_default-b24", "def-ask_default-b24", "def-count_default-b24", "aggfp-ask_default-b8", "aggfp-def_default-b8", "def-ask_default-b8", "def-count_default-b8", "aggfp-ask_default", "aggfp-def_default", "def-ask_default", "def-count_default", "aggfp-ask_nest-loop", "aggfp-def_nest-loop", "def-ask_nest-loop", "def-count_nest-loop", "aggfp-ask_sym-hash", "aggfp-def_sym-hash", "def-ask_sym-hash", "def-count_sym-hash" ]
 	}
 }

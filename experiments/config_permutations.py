@@ -78,8 +78,8 @@ def determinePermutations(algorithms, options):
     Returns all config file permutations as a list of Objects
     """
     combinations = []
-    for a in algorithms[:1]:
-        for o in options[:4]:
+    for a in algorithms:
+        for o in options:
             combinations.append(Config(
                 optimize_config=o,
                 join_config=a
@@ -160,6 +160,7 @@ def changeCombJson(current_comb_file, combos_added):
     target_line = '"factors":'
     # Create a new list of lines with the target lines replaced.
     updated_lines = []
+    trailing_parenthesis = False
     for line in lines:
         
         # find targeted line config
@@ -176,6 +177,10 @@ def changeCombJson(current_comb_file, combos_added):
 
             updated_lines.append("\t}\n")
         # all other lines
+        elif '"type":' in line:
+            trailing_parenthesis = True
+        elif trailing_parenthesis:
+            trailing_parenthesis = False
         else:
             updated_lines.append(line)
     
