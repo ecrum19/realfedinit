@@ -197,6 +197,43 @@ def changeCombJson(current_comb_file, combos_added):
     with open(current_comb_file, 'w') as f:
         f.writelines(updated_lines)
 
+def changeExptTemplateService(current_template_file):
+    """
+    creates new jbr-experiment.json.template file
+    """
+    with open(current_template_file, 'r') as f:
+        lines = f.readlines()
+
+    updated_lines = []
+    for line in lines:
+        if '"queryRunnerReplication":' in line:
+            updated_lines.append('\t"queryRunnerReplication": 1,\n')
+        else:
+            updated_lines.append(line)
+    
+    # Write the updated lines to the output file.
+    with open(current_template_file, 'w') as f:
+        f.writelines(updated_lines)
+
+
+def changeClientConfigService(config_client_path):
+    """
+    creates new cofig-client.json file with "import" statement
+    """
+    with open(config_client_path, 'r') as f:
+        lines = f.readlines()
+    
+    updated_lines = []
+    for line in lines:
+        if '"import":' in line:
+            updated_lines.append(line) # fix this line...
+        else:
+            updated_lines.append(line)
+    
+    # Write the updated lines to the output file.
+    with open(config_client_path, 'w') as f:
+        f.writelines(updated_lines)
+
 
 def changeDockerFile(current_docker_file):
     """
@@ -215,7 +252,7 @@ def changeDockerFile(current_docker_file):
         elif "CMD" in line:
             updated_lines.append(
                 'CMD [ "/bin/sh", "-c", "node --max-old-space-size=$MAX_MEMORY ./bin/http.js -c /tmp/context.json -p 3000 -t $QUERY_TIMEOUT -l $LOG_LEVEL --contextOverride -i" ]\n')
-         # all other lines
+        # all other lines
         else:
             updated_lines.append(line)
 
@@ -231,31 +268,36 @@ def main():
     # directories to algorithm and options directories
     algos_dir = sys.argv[1]
     options_dir = sys.argv[2]
-    dir_list = algos_dir.split('/')
+
+    if algos_dir == "default":
+        changeDockerFile("default_service/input/dockerfiles/Dockerfile-client")
+        changeExptTemplateService("default_service/jbr-experiment.json.template")
+        changeClientConfigService("default_service/input/config-client.json")
     
-    expt_dir = dir_list[0]+'/'
-    input_dir = '/'.join(dir_list[:2]) + '/'
-    docker_dir = f'{input_dir}dockerfiles/'
-    print(docker_dir)
+    else:
+        dir_list = algos_dir.split('/')
+        expt_dir = dir_list[0]+'/'
+        input_dir = '/'.join(dir_list[:2]) + '/'
+        docker_dir = f'{input_dir}dockerfiles/'
 
-    # all config paths
-    allAlgoPaths = listFilePaths(algos_dir)
-    allOptionPaths = listFilePaths(options_dir)
+        # all config paths
+        allAlgoPaths = listFilePaths(algos_dir)
+        allOptionPaths = listFilePaths(options_dir)
 
-    # all config files
-    algoFiles = listConfigFiles(allAlgoPaths)
-    optionFiles = listConfigFiles(allOptionPaths)
+        # all config files
+        algoFiles = listConfigFiles(allAlgoPaths)
+        optionFiles = listConfigFiles(allOptionPaths)
 
-    # all config names
-    algoNames = listConfigNames(algoFiles)
-    optionNames = listConfigNames(optionFiles)
+        # all config names
+        algoNames = listConfigNames(algoFiles)
+        optionNames = listConfigNames(optionFiles)
 
-    all_combos = determinePermutations(algoNames, optionNames)
+        all_combos = determinePermutations(algoNames, optionNames)
 
-    changeDockerFile(docker_dir+"Dockerfile-client")
-    writeClientConfigs(input_dir, algoNames, optionNames, algoFiles, optionFiles, all_combos)
-    changeExptTemplate(algos_dir, options_dir, algoFiles, optionFiles, f"{expt_dir}jbr-experiment.json.template")
-    changeCombJson(f"{expt_dir}jbr-combinations.json", all_combos)
+        changeDockerFile(docker_dir+"Dockerfile-client")
+        writeClientConfigs(input_dir, algoNames, optionNames, algoFiles, optionFiles, all_combos)
+        changeExptTemplate(algos_dir, options_dir, algoFiles, optionFiles, f"{expt_dir}jbr-experiment.json.template")
+        changeCombJson(f"{expt_dir}jbr-combinations.json", all_combos)
 
 
 
