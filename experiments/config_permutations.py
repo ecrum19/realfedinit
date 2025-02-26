@@ -226,7 +226,7 @@ def changeClientConfigService(config_client_path):
     updated_lines = []
     for line in lines:
         if '"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^2.0.0/components/context.jsonld"' in line:
-            updated_lines.append("https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^4.0.0/components/context.jsonld") # fix this line...
+            updated_lines.append('\t\t"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^4.0.0/components/context.jsonld"\n') # fix this line...
         else:
             updated_lines.append(line)
     
