@@ -111,12 +111,12 @@ def withoutService(data, out_directory):
         for line in split_query:
             # remove SERVICE description line
             if "SERVICE" in line:
-                line_s = line.split(" ")
+                line_s = line.split("<")
                 for s in line_s:
-                    if "<" in s:
-                        source = s.replace("<", "").replace(">", "")
+                    if ">" in s:
+                        source = s.split(">")[0]
                         if "{" in source:
-                            source = source[:-1]
+                            source = source[:-1].strip()
                 ns_query_source += " %s" % source
                 brace_count += 1
                 curr_service = True

@@ -1,4 +1,4 @@
-# Datasources: https://sparql.uniprot.org/sparql/ SERVICEhttps://id.nlm.nih.gov/mesh/sparql
+# Datasources: https://sparql.uniprot.org/sparql/ https://id.nlm.nih.gov/mesh/sparql
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 SELECT
