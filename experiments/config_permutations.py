@@ -197,9 +197,9 @@ def changeCombJson(current_comb_file, combos_added):
     with open(current_comb_file, 'w') as f:
         f.writelines(updated_lines)
 
-def changeExptTemplateService(current_template_file):
+def changeExptJsonService(current_template_file):
     """
-    creates new jbr-experiment.json.template file
+    makes changes to jbr-experiment.json file
     """
     with open(current_template_file, 'r') as f:
         lines = f.readlines()
@@ -218,15 +218,15 @@ def changeExptTemplateService(current_template_file):
 
 def changeClientConfigService(config_client_path):
     """
-    creates new cofig-client.json file with "import" statement
+    changes cofig-client.json file to use Comuniva v4
     """
     with open(config_client_path, 'r') as f:
         lines = f.readlines()
     
     updated_lines = []
     for line in lines:
-        if '"import":' in line:
-            updated_lines.append(line) # fix this line...
+        if '"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^2.0.0/components/context.jsonld"' in line:
+            updated_lines.append("https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^4.0.0/components/context.jsonld") # fix this line...
         else:
             updated_lines.append(line)
     
@@ -265,14 +265,16 @@ def main():
         print("Usage: python3 config_permutations.py <aglorithm_dir> <options_dir>")
         sys.exit(1)
 
-    # directories to algorithm and options directories
+    # TODO: use argparse for this because it will be much prettier
     algos_dir = sys.argv[1]
     options_dir = sys.argv[2]
 
-    if algos_dir == "default":
-        changeDockerFile("default_service/input/dockerfiles/Dockerfile-client")
-        changeExptTemplateService("default_service/jbr-experiment.json.template")
-        changeClientConfigService("default_service/input/config-client.json")
+    if "default" in algos_dir:
+        dir_list = algos_dir.split('/')
+        expt_dir = dir_list[0]+'/'
+        changeDockerFile(f"{expt_dir}/input/dockerfiles/Dockerfile-client")
+        changeExptJsonService(f"{expt_dir}/jbr-experiment.json")
+        changeClientConfigService(f"{expt_dir}/input/config-client.json")
     
     else:
         dir_list = algos_dir.split('/')
