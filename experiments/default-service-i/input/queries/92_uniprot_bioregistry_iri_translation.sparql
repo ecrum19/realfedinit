@@ -1,4 +1,4 @@
-# Datasources: https://sparql.uniprot.org/sparql/
+# Datasources: https://sparql.uniprot.org/sparql
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX uniprotkb: <http://purl.uniprot.org/uniprot/>
 PREFIX up: <http://purl.uniprot.org/core/>

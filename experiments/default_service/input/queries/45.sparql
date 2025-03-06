@@ -13,7 +13,7 @@ SELECT DISTINCT ?protein ?proteinFullName ?wikiChemical ?wikiChemicalLabel ?medi
 WHERE {
   # ChEBI: retrieve members of the ChEBI class ChEBI:15889 (sterol)
   # Rhea: retrieve the reactions involving these ChEBI as participants
-  SERVICE <https://sparql.rhea-db.org/sparql> {
+  SERVICE <https://sparql.rhea-db.org/sparql/> {
     ?reaction rdfs:subClassOf rh:Reaction ;
       rh:status rh:Approved ;
       rh:side ?reactionSide .

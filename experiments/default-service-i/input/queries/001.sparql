@@ -1,4 +1,4 @@
-# Datasources: https://biosoda.unil.ch/emi/sparql/
+# Datasources: https://biosoda.unil.ch/emi/sparql
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX sosa: <http://www.w3.org/ns/sosa/>

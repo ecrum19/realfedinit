@@ -1,4 +1,4 @@
-# Datasources: https://sparql.uniprot.org/sparql/
+# Datasources: https://sparql.uniprot.org/sparql
 PREFIX eunisSpecies: <http://eunis.eea.europa.eu/rdf/species-schema.rdf#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>

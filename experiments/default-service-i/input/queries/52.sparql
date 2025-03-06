@@ -1,4 +1,4 @@
-# Datasources: https://sparql.uniprot.org/sparql/
+# Datasources: https://sparql.uniprot.org/sparql
 PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX cco: <http://rdf.ebi.ac.uk/terms/chembl#>
 PREFIX chebihash: <http://purl.obolibrary.org/obo/chebi#>

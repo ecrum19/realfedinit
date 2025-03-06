@@ -1,4 +1,4 @@
-# Datasources: https://sparql.uniprot.org/sparql/
+# Datasources: https://sparql.uniprot.org/sparql
 PREFIX genex: <http://purl.org/genex#>
 PREFIX lscr: <http://purl.org/lscr#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>

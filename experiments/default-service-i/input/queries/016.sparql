@@ -1,4 +1,4 @@
-# Datasources: https://www.bgee.org/sparql/
+# Datasources: https://www.bgee.org/sparql
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>

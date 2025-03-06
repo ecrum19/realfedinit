@@ -1,4 +1,4 @@
-# Datasources: https://sparql.omabrowser.org/sparql
+# Datasources: sparql@https://sparql.omabrowser.org/sparql
 PREFIX oma: <http://omabrowser.org/ontology/oma#>
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX sio: <http://semanticscience.org/resource/>

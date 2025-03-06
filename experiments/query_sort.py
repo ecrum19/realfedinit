@@ -55,6 +55,8 @@ def withService(data, out_directory):
                 fix_prefix_s_query_text += f"\n{i}"
         
         s_query_source = item_value.get("target")
+        if s_query_source == "https://sparql.omabrowser.org/sparql":
+            s_query_source = "sparql@https://sparql.omabrowser.org/sparql"
 
         if s_query_text is None:
             print(f"Skipping item '{item_key}': no 'query' property found.")
@@ -117,6 +119,8 @@ def withoutService(data, out_directory):
                         source = s.split(">")[0]
                         if "{" in source:
                             source = source[:-1].strip()
+                if source == "https://sparql.omabrowser.org/sparql":
+                    source = "sparql@https://sparql.omabrowser.org/sparql"
                 ns_query_source += " %s" % source
                 brace_count += 1
                 curr_service = True
