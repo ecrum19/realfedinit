@@ -45,7 +45,33 @@ def main():
 def withService(data, out_directory):
     output_dir_s = os.path.join(out_directory, "input", "queries")
     os.makedirs(output_dir_s, exist_ok=True)
-    
+
+    excluded = [
+        "7.sparql",
+        "emi#examples021.sparql",
+        "70_enzymes_interacting_with_molecules_similar_to_dopamine.sparql",
+        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease.sparql",
+        "54.sparql",
+        "60.sparql",
+        "002.sparql",
+        "18a.sparql",
+        "13.sparql",
+        "14.sparql",
+        "17.sparql",
+        "18.sparql",
+        "19.sparql",
+        "20.sparql",
+        "36.sparql",
+        "46.sparql",
+        "92_uniprot_bioregistry_iri_translation.sparql",
+        "99_uniprot_identifiers_org_translation.sparql",
+        "90_uniprot_affected_by_metabolic_diseases_using_MeSH.sparql",
+        "7.sparql",
+        "48.sparql",
+        "50.sparql",
+        "emi#examples012.sparql"
+    ]
+    total = 0
     past_names = []
     for item_key, item_value in data["data"].items():
         s_query_text = item_value.get("query").split('\n')
@@ -72,20 +98,23 @@ def withService(data, out_directory):
         
         # Case where file name is repeated
         if base_name in past_names:
-            base_name = base_name.join("a")
+            base_name += "a"
         past_names.append(base_name)
 
         # Append the .sparql extension.
         s_output_filename = f"{base_name}.sparql"
         s_full_output_path = os.path.join(output_dir_s, s_output_filename)
 
-        # for with SERVICE descriptions
-        try:
-            with open(s_full_output_path, 'w', encoding='utf-8') as out_file:
-                out_file.write("# Datasources: %s%s" % (s_query_source, fix_prefix_s_query_text))
-            # print(f"Created file: {output_filename}")
-        except Exception as e:
-            print(f"Error writing {s_output_filename}: {e}")
+        if "%s.sparql" % (base_name) not in excluded:
+            total += 1
+            # for with SERVICE descriptions
+            try:
+                with open(s_full_output_path, 'w', encoding='utf-8') as out_file:
+                    out_file.write("# Datasources: %s%s" % (s_query_source, fix_prefix_s_query_text))
+                # print(f"Created file: {output_filename}")
+            except Exception as e:
+                print(f"Error writing {s_output_filename}: {e}")
+    print(total)
 
 
 
