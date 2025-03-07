@@ -1,11 +1,22 @@
-query-name,sib-location,comunica-results,sparql-endpoint-results,problem?,changed-source-url
+query-name,sources,comunica-results,sparql-endpoint-results
+    problem?
 
+Queries to try:
+001.sparql,dgbi+wikidata,-,10
+    Query operation processing failed: none of the configured actors were able to handle the operation type pattern
+    Error messages of failing actors:
+        Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
 
-Work properly:
-001.sparql,dgbi,10,10,-,-
-3.sparql,OMA,>1,76,-,-
+3.sparql,OMA+uniprot,>1,76,-,-
+    Invalid SPARQL endpoint response from https://sparql.omabrowser.org/sparql/ (HTTP status 504):
+    timeout
+
 5.sparql,SwissLipids,>1,267,-,-
+    No source annotation ...
+
 6.sparql,SwissLipids,>1,26,comunica: ORDER BY??,-
+    No source annotation ...
+
 006.sparql,dgbi,5,5,-,-
 007.sparql,dgbi,>1,92,-,-
 009.sparql,dgbi,1,1,-,-

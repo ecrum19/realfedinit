@@ -97,7 +97,9 @@ def withoutService(data, out_directory):
     past_names = []
     for item_key, item_value in data["data"].items():
         s_query_text = item_value.get("query")
-        s_query_source = item_value.get("target")
+        ns_query_source = item_value.get("target")
+        if ns_query_source == "https://sparql.omabrowser.org/sparql":
+            ns_query_source = "sparql@https://sparql.omabrowser.org/sparql"
 
         if s_query_text is None:
             print(f"Skipping item '{item_key}': no 'query' property found.")
@@ -105,7 +107,6 @@ def withoutService(data, out_directory):
 
         
         # generate no SERVICE description query
-        ns_query_source = s_query_source
         split_query = s_query_text.split("\n")
         ns_query_text = ""
         brace_count = 0
