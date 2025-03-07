@@ -1,6 +1,7 @@
 query-name,sib-location,comunica-results,sparql-endpoint-results,problem?,changed-source-url
 
-
+16/39 still throw errors
+1/39 gets no results
 Work properly:
 001.sparql,dgbi,10,10,-,-
 3.sparql,OMA,>1,76,-,-
