@@ -12,11 +12,11 @@ SELECT DISTINCT ?geneEns ?uniprot ?annotation_text {
 			?geneB genex:isExpressedIn ?cond .
 			?cond genex:hasAnatomicalEntity ?anat .
 				?geneB lscr:xrefEnsemblGene ?geneEns .
-		?anat rdfs:label 'pancreas' .
-		?geneB orth:organism ?o .
+			?anat rdfs:label 'pancreas' .
+			?geneB orth:organism ?o .
 			?o obo:RO_0002162 ?taxon2 .
 			?taxon2 up:commonName 'human' .
-		}
+		} LIMIT 100
 	}
 	SERVICE <https://sparql.uniprot.org/sparql> {
 		?uniprot rdfs:seeAlso / up:transcribedFrom ?geneEns .
