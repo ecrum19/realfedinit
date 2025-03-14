@@ -37,6 +37,13 @@ emi#examples018.sparql,dgbi,>1,1000,-,-
 emi#examples019b.sparql,dgbi,>1,10000,-,-
 *a.sparql,rhea,>1,137,-,-
 
+Q00000004.sparql,uniprot,,10,-,-
+Q00000005.sparql,uniprot,,71,-,-
+Q00000007.sparql,,,?,-,- (limit query)
+Q00000008.sparql,,,?,-,- (limit query)
+Q00000010.sparql,uniprot,,24,-,-
+Q00000011.sparql,oma,,0,-,-
+
 
 Both no results:
 7.sparql,SwissLipids,0,0,general: no results,-

@@ -23,12 +23,12 @@
                         ?ik2d emi:hasSMILES ?smiles ;
 			      emi:isInChIKey2DOf ?ik .
                         ?ik emi:isInChIKeyOf ?wd_chem .				#retrieve wikidats-ids for metabolites
-                        VALUES ?wd_chem { wd:Q100138042 }			#filter on wikidata-id of asimicin
+                        VALUES ?wd_chem { wd:Q100138042 } .			#filter on wikidata-id of asimicin
 			}
                    } UNION							#union with results from lotus (integrated in wikidata)
 			?wd_chem wdt:P235 ?ik ;
 				 wdt:P703 ?sourceWD .
-			VALUES ?wd_chem { wd:Q100138042 }
+			VALUES ?wd_chem { wd:Q100138042 } .
                    ?intxn emi:hasSource ?xOrg ;					#retrieve interaction-pairs
                           emi:hasTarget ?yOrg ;
                           emi:isClassifiedWith ?intxnName .

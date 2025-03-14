@@ -122,6 +122,32 @@ def withoutService(data, out_directory):
     output_dir_ns = os.path.join(out_directory, "input", "queries")
     os.makedirs(output_dir_ns, exist_ok=True)
 
+    excluded = [
+        "7",
+        "emi#examples021",
+        "70_enzymes_interacting_with_molecules_similar_to_dopamine",
+        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease",
+        "54",
+        "60",
+        "002",
+        "18a",
+        "13",
+        "14",
+        "17",
+        "18",
+        "19",
+        "20",
+        "36",
+        "46",
+        "92_uniprot_bioregistry_iri_translation",
+        "99_uniprot_identifiers_org_translation",
+        "90_uniprot_affected_by_metabolic_diseases_using_MeSH",
+        "7",
+        "48",
+        "50",
+        "emi#examples012"
+    ]
+
     # Iterate over each item in the "data" dictionary.
     past_names = []
     for item_key, item_value in data["data"].items():

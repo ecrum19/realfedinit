@@ -99,3 +99,37 @@ Endpoint error:
 
 endpoints: 
 dgbi(no-slash),rhea(no-slash),uniprot(no-slash),oma(@sparql/no-slash),swisslipids(beta./no-slash),bgee(no-slash)
+
+
+New Queries (in JSON):
+"id": "Q00003712", Bgee/OMA
+"id": "Q00003711", Bgee/OMA
+"id": "Q00003706", Bgee/OMA
+"id": "Q00000009", OMA/UniProt
+"id": "Q00000010", UniProt/OMA
+"id": "Q00000011", OMA/UniProt
+"id": "Q00000006", Bgee/UniProt
+"id": "Q00000007", Bgee/UniProt
+"id": "Q00000008", Bgee/UniProt
+"id": "Q00000013", Bgee/OMA/UniProt
+"id": "Q00000014", Bgee/OMA/UniProt
+"id": "Q00003694", Bgee/OMA/UniProt
+"id": "Q00000004", UniProt/OMA/Bgee
+"id": "Q00000005", UniProt/OMA/Bgee
+
+
+
+New Queries Notes:
+dgbi#002.ttl == biosodafrontend#Q00003715
+Bgee#019.ttl == biosodafrontend#Q00003711 == biosodafrontend#Q00000013
+Bgee#020.ttl == biosodafrontend#Q00003706 == biosodafrontend#Q00000014
+OMA#3.ttl == biosodafrontend#Q00000009
+Bgee#017.ttl == biosodafrontend#Q00000006
+Bgee#016.ttl == biosodafrontend#Q00003694
+
+none == biosodafrontend#Q00000010
+none == biosodafrontend#Q00000011
+none == biosodafrontend#Q00000007
+none == biosodafrontend#Q00000008
+none == biosodafrontend#Q00000004
+none == biosodafrontend#Q00000005
