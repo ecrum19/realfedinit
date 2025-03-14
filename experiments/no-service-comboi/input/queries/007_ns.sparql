@@ -36,7 +36,7 @@ WHERE {
             ?ik emi:isInChIKeyOf ?wd_id .
         } LIMIT 50
     }
-        ?wd_id wdt:P31 wd:Q113145171 ;
-            wdt:P703 ?taxon .
-        ?taxon wdt:P225 ?taxon_name .
+    ?wd_id wdt:P31 wd:Q113145171 ;
+        wdt:P703 ?taxon .
+    ?taxon wdt:P225 ?taxon_name .
 }

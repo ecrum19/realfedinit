@@ -1,7 +1,7 @@
 query-name,sources,comunica-results,sparql-endpoint-results
     problem?
 
-Queries to try:
+Queries problems:
 001.sparql,dgbi+wikidata,-,10
     Query operation processing failed: none of the configured actors were able to handle the operation type pattern
     Error messages of failing actors:
@@ -12,27 +12,62 @@ Queries to try:
     timeout
 
 5.sparql,SwissLipids,>1,267,-,-
-    No source annotation ...
+    Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
 
 6.sparql,SwissLipids,>1,26,comunica: ORDER BY??,-
-    No source annotation ...
+    Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
 
 006.sparql,dgbi,5,5,-,-
-007.sparql,dgbi,>1,92,-,-
+    Invalid SPARQL endpoint response from  https://query.wikidata.org/sparql (HTTP status 429):
+    Rate limit exceeded
+
+007.sparql,dgbi,>1,92,-,- (maybe could work...)
+    FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+
 009.sparql,dgbi,1,1,-,-
+    Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
+
 11.sparql,Rhea,7,7,-,-
-12.sparql,Rhea,12719,12719,-,-
+    fetch failed
+
+12.sparql,Rhea,12719,12719,-, added {} around inner SELECT
+    Seems to WORK but only gives 12? results
+
 16.sparql,SwissLipids,>1,26,comunica: ORDER BY??,-
+    fetch failed
+
 016.sparql,Bgee,13,13,comunica: Continues to run after results??,-
+    Could not dereference ' https://sparql.omabrowser.org/sparql/'
+
 017.sparql,Bgee,20,20,-,-
+    No Results....
+
 020.sparql,Bgee,>1,297,-,-
+    Invalid SPARQL endpoint response from  https://sparql.omabrowser.org/sparql (HTTP status 406)
+
 29.sparql,uniprot,>1,51,-,-
+    fetch failed
+
 38.sparql,uniprot,2,2,-,-
+    Invalid SPARQL endpoint response from https://sparql.uniprot.org/sparql (HTTP status 400):
+
 42.sparql,uniprot,>1,66,-,-
+    Could not dereference ' https://data.epo.org/linked-data/query'
+
 43.sparql,uniprot,>1,71,-,-
+    Could not dereference ' https://data.epo.org/linked-data/query'
+
 45.sparql,uniprot,>1,26,-,-
+    Invalid SPARQL endpoint response from  https://query.wikidata.org/sparql (HTTP status 429):
+    Rate limit exceeded
+
 49.sparql,uniprot,>1,54105,-,-
+    FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+
 51.sparql,uniprot,>1,24733,-,-
+    FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+
+(did not test because will probably get stack-trace errors)
 *52.sparql,uniprot,>1,>1,-,-
 53.sparql,uniprot,>1,>1,-,-
 *54.sparql,uniprot,>1,>1,-,-
@@ -99,24 +134,6 @@ Endpoint error:
 
 endpoints: 
 dgbi(no-slash),rhea(no-slash),uniprot(no-slash),oma(@sparql/no-slash),swisslipids(beta./no-slash),bgee(no-slash)
-
-
-New Queries (in JSON):
-"id": "Q00003712", Bgee/OMA
-"id": "Q00003711", Bgee/OMA
-"id": "Q00003706", Bgee/OMA
-"id": "Q00000009", OMA/UniProt
-"id": "Q00000010", UniProt/OMA
-"id": "Q00000011", OMA/UniProt
-"id": "Q00000006", Bgee/UniProt
-"id": "Q00000007", Bgee/UniProt
-"id": "Q00000008", Bgee/UniProt
-"id": "Q00000013", Bgee/OMA/UniProt
-"id": "Q00000014", Bgee/OMA/UniProt
-"id": "Q00003694", Bgee/OMA/UniProt
-"id": "Q00000004", UniProt/OMA/Bgee
-"id": "Q00000005", UniProt/OMA/Bgee
-
 
 
 New Queries Notes:

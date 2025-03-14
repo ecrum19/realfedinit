@@ -12,12 +12,12 @@ SELECT
         ?chebi
         ?uniprotName
 WHERE {
-     VALUES (?chebi) { (CHEBI:32395) }
-     ?rhea rh:side/rh:contains/rh:compound ?compound .
-     ?compound rh:chebi ?chebi .
-     ?chebi up:name ?uniprotName .
+  VALUES (?chebi) { (CHEBI:32395) }
+  ?rhea rh:side/rh:contains/rh:compound ?compound .
+  ?compound rh:chebi ?chebi .
+  ?chebi up:name ?uniprotName .
   ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea .
   ?uniprot up:mnemonic ?uniprotID .
   ?uniprot up:recommendedName/up:fullName ?recname .
   OPTIONAL {?uniprot up:encodedBy/skos:prefLabel ?gene .}
-}
+} LIMIT 10

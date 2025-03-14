@@ -18,8 +18,8 @@ SELECT DISTINCT ?anatomicalEntity ?goClass ?goLabel {
             ?anat rdfs:label ?anatomicalEntity .
         }
     }
-        ?uniprot rdfs:seeAlso/up:transcribedFrom ?ensemblGene ;
-            a up:Protein ;
-            up:classifiedWith ?goClass .
-        ?goClass rdfs:label ?goLabel .
+    ?uniprot rdfs:seeAlso/up:transcribedFrom ?ensemblGene ;
+        a up:Protein ;
+        up:classifiedWith ?goClass .
+    ?goClass rdfs:label ?goLabel .
 } LIMIT 20

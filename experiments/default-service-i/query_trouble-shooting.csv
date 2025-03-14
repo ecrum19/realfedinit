@@ -42,7 +42,7 @@ Q00000005.sparql,uniprot,,71,-,-
 Q00000007.sparql,,,?,-,- (limit query)
 Q00000008.sparql,,,?,-,- (limit query)
 Q00000010.sparql,uniprot,,24,-,-
-Q00000011.sparql,oma,,0,-,-
+Q00000011.sparql,oma,,0,-,- (wierd filter thing)
 
 
 Both no results:

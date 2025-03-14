@@ -45,18 +45,18 @@ WHERE {
     }
     # Outer query to fetch species names from Wikidata
     # Fetching taxonomic information from Wikidata
-        ?wd_sp wdt:P225 ?species_name .
-        OPTIONAL {
-            ?family wdt:P31 wd:Q16521 ;
-                wdt:P105 wd:Q35409 ;
-                wdt:P225 ?family_name ;
-                ^wdt:P171* ?wd_sp .
-        }
-        OPTIONAL {
-            ?genus wdt:P31 wd:Q16521 ;
-                wdt:P105 wd:Q34740 ;
-                wdt:P225 ?genus_name ;
-                ^wdt:P171* ?wd_sp .
-        }
+    ?wd_sp wdt:P225 ?species_name .
+    OPTIONAL {
+        ?family wdt:P31 wd:Q16521 ;
+            wdt:P105 wd:Q35409 ;
+            wdt:P225 ?family_name ;
+            ^wdt:P171* ?wd_sp .
+    }
+    OPTIONAL {
+        ?genus wdt:P31 wd:Q16521 ;
+            wdt:P105 wd:Q34740 ;
+            wdt:P225 ?genus_name ;
+            ^wdt:P171* ?wd_sp .
+    }
 } GROUP BY ?family_name ?genus_name ?species_name ?wd_sp ?feature ?sub_rt ?sub_parent_mass ?count
 ORDER BY DESC(?count)

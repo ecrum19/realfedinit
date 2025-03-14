@@ -30,6 +30,6 @@ WHERE {
   # federated query to Bgee (expression data)
   BIND(IRI(REPLACE(STR(?ensemblGene), "\\.[0-9]+$", "")) AS ?ensemblGeneNoVersion)
     ?gene lscr:xrefEnsemblGene ?ensemblGeneNoVersion ;
-      genex:isExpressedIn ?anatomicEntity .
-    ?anatomicEntity rdfs:label ?anatomicEntityLabel .
+    genex:isExpressedIn ?anatomicEntity .
+  ?anatomicEntity rdfs:label ?anatomicEntityLabel .
 }

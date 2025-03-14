@@ -11,10 +11,12 @@ PREFIX up: <http://purl.uniprot.org/core/>
 #
 SELECT ?uniprotCount ?rhea ?accession ?equation 
 WHERE {
+  {
   	SELECT ?rhea (count(?uniprot) as ?uniprotCount) {
       ?uniprot up:annotation/up:catalyticActivity/up:catalyzedReaction ?rhea . 
   	}
   	GROUP BY ?rhea
+  }
   ?rhea rh:accession ?accession .
   ?rhea rh:equation ?equation .
 }

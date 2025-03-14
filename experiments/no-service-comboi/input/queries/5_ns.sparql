@@ -17,7 +17,7 @@ WHERE
   # ChEBI x-ref
   ?id owl:equivalentClass ?chebi .
   # federated query to Rhea
-  	?rhea rh:equation ?rheaEquation .
-  	?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
+  ?rhea rh:equation ?rheaEquation .
+  ?rhea rh:side/rh:contains/rh:compound/rh:chebi ?chebi .
 } 
 ORDER BY  ?startId ?id

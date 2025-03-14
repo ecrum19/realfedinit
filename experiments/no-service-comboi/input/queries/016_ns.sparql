@@ -17,22 +17,22 @@ SELECT ?gene ?omaLink ?uniprot ?diseaseLabel ?annotationText WHERE {
             ?taxonRat up:commonName 'rat' .
         } LIMIT 20
     }
-        ?taxonHuman up:commonName 'Human' .
-        ?cluster a orth:OrthologsCluster ;
-            orth:hasHomologousMember ?node1 ;
-            orth:hasHomologousMember ?node2 .
-        ?node2 orth:hasHomologousMember* ?protein2 .
-        ?node1 orth:hasHomologousMember* ?protein1 .
-        ?protein1 a orth:Protein ;
-            sio:SIO_010079 ?gene . # encoded by
-        ?protein2 a orth:Protein ;
-            rdfs:seeAlso ?omaLink ;
-            orth:organism/obo:RO_0002162 ?taxonHuman ;
-            lscr:xrefUniprot ?uniprot .
-        FILTER(?node1 != ?node2)
-        ?uniprot up:annotation ?annotation .
-        ?annotation a up:Disease_Annotation ;
-            rdfs:comment ?annotationText ;
-            up:disease ?disease .
-        ?disease skos:prefLabel ?diseaseLabel .
+    ?taxonHuman up:commonName 'Human' .
+    ?cluster a orth:OrthologsCluster ;
+        orth:hasHomologousMember ?node1 ;
+        orth:hasHomologousMember ?node2 .
+    ?node2 orth:hasHomologousMember* ?protein2 .
+    ?node1 orth:hasHomologousMember* ?protein1 .
+    ?protein1 a orth:Protein ;
+        sio:SIO_010079 ?gene . # encoded by
+    ?protein2 a orth:Protein ;
+        rdfs:seeAlso ?omaLink ;
+        orth:organism/obo:RO_0002162 ?taxonHuman ;
+        lscr:xrefUniprot ?uniprot .
+    FILTER(?node1 != ?node2)
+    ?uniprot up:annotation ?annotation .
+    ?annotation a up:Disease_Annotation ;
+        rdfs:comment ?annotationText ;
+        up:disease ?disease .
+    ?disease skos:prefLabel ?diseaseLabel .
 }

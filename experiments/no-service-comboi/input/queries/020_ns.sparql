@@ -1,4 +1,4 @@
-# Datasources: https://www.bgee.org/sparql sparql@https://sparql.omabrowser.org/sparql
+# Datasources: https://www.bgee.org/sparql https://sparql.omabrowser.org/sparql
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX genex: <http://purl.org/genex#>
@@ -16,6 +16,7 @@ SELECT DISTINCT ?flyEnsemblGene ?orthologTaxon ?orthologEnsemblGene ?orthologOma
         ?taxon up:commonName 'fruit fly' .
         } LIMIT 100
     }
+    {
         ?protein2 a orth:Protein .
         ?protein1 a orth:Protein .
         ?clusterPrimates a orth:OrthologsCluster .
@@ -31,7 +32,7 @@ SELECT DISTINCT ?flyEnsemblGene ?orthologTaxon ?orthologEnsemblGene ?orthologOma
             sio:SIO_010079 ?orthologGene . # is encoded by
         ?clusterPrimates orth:hasTaxonomicRange ?taxRange .
         ?taxRange orth:taxRange 'Primates' .
-        FILTER ( ?node1 != ?node2 )
+    } FILTER ( ?node1 != ?node2 )
     ?orthologTaxonUri up:commonName ?orthologTaxon .
     ?orthologGene dcterms:identifier ?orthologEnsemblGene .
 }

@@ -3,9 +3,11 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 SELECT ?protein ?englishLabelStr
 WHERE {
+    {
         ?x rdfs:label "アミロイド前駆体タンパク質"@ja ;
             rdfs:label ?englishLabel .
         FILTER(lang(?englishLabel) = "en")
+    }
     BIND (STR(?englishLabel) AS ?englishLabelStr)
     ?protein a up:Protein .
     {

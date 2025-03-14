@@ -10,9 +10,9 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 # https://www.rhea-db.org/rhea?query=
 SELECT ?ecClass (STR(?ecName) AS ?ecClassName) (COUNT(?rhea) AS ?rheaCount)
 WHERE {
-    VALUES (?ecClass) { (ec:1.-.-.-)(ec:2.-.-.-)(ec:3.-.-.-)(ec:4.-.-.-)(ec:5.-.-.-) (ec:6.-.-.-) (ec:7.-.-.-)}
-    ?ecNumber rdfs:subClassOf ?ecClass .
-    ?ecClass skos:prefLabel ?ecName .
+  VALUES (?ecClass) { (ec:1.-.-.-)(ec:2.-.-.-)(ec:3.-.-.-)(ec:4.-.-.-)(ec:5.-.-.-) (ec:6.-.-.-) (ec:7.-.-.-)}
+  ?ecNumber rdfs:subClassOf ?ecClass .
+  ?ecClass skos:prefLabel ?ecName .
   ?rhea rdfs:subClassOf rh:Reaction .
   ?rhea rh:ec ?ecNumber .
 } GROUP BY ?ecClass ?ecName

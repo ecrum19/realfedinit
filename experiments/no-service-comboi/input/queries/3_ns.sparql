@@ -11,6 +11,6 @@ WHERE {
         rdfs:label 'INS' .
     ?proteinOMA lscr:xrefUniprot ?UniProt_URI .
     # Search the INS gene mnemonics and evidence types from Uniprot database
-        ?UniProt_URI up:mnemonic ?mnemonic ;
-            up:existence/rdfs:label ?evidenceType.
+    ?UniProt_URI up:mnemonic ?mnemonic ;
+        up:existence/rdfs:label ?evidenceType.
 }
