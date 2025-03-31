@@ -99,7 +99,11 @@ def withService(data, out_directory):
 
 def withoutService(data, out_directory):
     output_dir_ns = os.path.join(out_directory, "input", "queries")
-    os.makedirs(output_dir_ns, exist_ok=True)
+    try:
+        os.makedirs(output_dir_ns, exist_ok=False)
+    except Exception as e:
+        print(f"Directory {output_dir_ns} already exists")
+    
 
     excluded = [
         "13_ns.rq", # server-side error
@@ -199,7 +203,7 @@ def withoutService(data, out_directory):
             base_name += "a"
         past_names.append(base_name)
 
-        # Append the .sparql extension.
+        # Append the .rq extension.
         ns_output_filename = f"{base_name}_ns.rq"
         ns_full_output_path = os.path.join(output_dir_ns, ns_output_filename)
 
@@ -208,8 +212,8 @@ def withoutService(data, out_directory):
             total += 1
             # for without SERVICE descriptions
             try:
-                with open(out_directory, 'w', encoding='utf-8') as out_file:
-                    out_file.write("# Datasources: %s%s" % (ns_query_source, fix_prefix_s_query_text))
+                with open(ns_full_output_path, 'w', encoding='utf-8') as out_file:
+                    out_file.write("# Datasources: %s" % (ns_query_source))
                 # print(f"Created file: {output_filename}")
             except Exception as e:
                 print(f"Error writing {ns_output_filename}: {e}")

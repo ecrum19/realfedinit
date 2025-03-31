@@ -1,11 +1,11 @@
-# Datasources: sparql@https://sparql.omabrowser.org/sparql sparql@https://sparql.omabrowser.org/sparql/ sparql@https://sparql.uniprot.org/sparql
+# Datasources: sparql@https://sparql.omabrowser.org/sparql sparql@https://sparql.uniprot.org/sparql
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX orth: <http://purl.org/net/orth#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX lscr: <http://purl.org/lscr#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT DISTINCT ?PROTEIN ?IS_PARALOGOUS_TO_PROTEIN ?UNIPROT_XREF ?PARALOG_UNIPROT_XREF ?annotation_text WHERE {
-		{
+	{
 		?cluster a orth:ParalogsCluster .
 		?cluster orth:hasHomologousMember ?node1 .
 		?cluster orth:hasHomologousMember ?node2 .
@@ -24,5 +24,4 @@ SELECT DISTINCT ?PROTEIN ?IS_PARALOGOUS_TO_PROTEIN ?UNIPROT_XREF ?PARALOG_UNIPRO
 		?annotation a up:Function_Annotation .
 		?annotation rdfs:comment ?annotation_text .
 	}
-	FILTER ( ?node1 != ?node2 )
 }
