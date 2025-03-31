@@ -1,4 +1,4 @@
-# Datasources: https://sparql.orthodb.org/sparql/
+# Datasources: sparql@https://sparql.orthodb.org/sparql/
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX GO: <http://purl.obolibrary.org/obo/GO_>

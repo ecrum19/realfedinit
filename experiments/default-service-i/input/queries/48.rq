@@ -1,4 +1,4 @@
-# Datasources: https://sparql.uniprot.org/sparql
+# Datasources: sparql@https://sparql.uniprot.org/sparql
 PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX glycan: <http://purl.jp/bio/12/glyco/glycan#>

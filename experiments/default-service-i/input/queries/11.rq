@@ -1,4 +1,4 @@
-# Datasources: https://sparql.rhea-db.org/sparql
+# Datasources: sparql@https://sparql.rhea-db.org/sparql
 PREFIX ec: <http://purl.uniprot.org/enzyme/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rh: <http://rdf.rhea-db.org/>

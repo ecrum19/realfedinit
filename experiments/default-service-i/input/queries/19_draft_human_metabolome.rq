@@ -1,4 +1,4 @@
-# Datasources: https://sparql.rhea-db.org/sparql
+# Datasources: sparql@https://sparql.rhea-db.org/sparql
 PREFIX chebislash: <http://purl.obolibrary.org/obo/chebi/>
 PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>

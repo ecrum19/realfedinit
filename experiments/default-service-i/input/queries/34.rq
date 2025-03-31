@@ -1,4 +1,4 @@
-# Datasources: https://beta.sparql.swisslipids.org/sparql
+# Datasources: sparql@https://beta.sparql.swisslipids.org/sparql
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX taxon: <http://purl.uniprot.org/taxonomy/>

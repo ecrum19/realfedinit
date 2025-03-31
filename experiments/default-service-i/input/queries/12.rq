@@ -1,4 +1,4 @@
-# Datasources: https://sparql.rhea-db.org/sparql
+# Datasources: sparql@https://sparql.rhea-db.org/sparql
 PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX up: <http://purl.uniprot.org/core/>
 # Query 12

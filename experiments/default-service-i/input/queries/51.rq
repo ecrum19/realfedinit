@@ -1,4 +1,4 @@
-# Datasources: https://sparql.uniprot.org/sparql
+# Datasources: sparql@https://sparql.uniprot.org/sparql
 PREFIX CHEBI: <http://purl.obolibrary.org/obo/CHEBI_>
 PREFIX rh: <http://rdf.rhea-db.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

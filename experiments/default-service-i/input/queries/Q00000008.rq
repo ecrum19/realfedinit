@@ -1,4 +1,4 @@
-# Datasources: https://www.bgee.org/sparql/
+# Datasources: sparql@https://www.bgee.org/sparql/
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -6,7 +6,7 @@ PREFIX genex: <http://purl.org/genex#>
 PREFIX lscr: <http://purl.org/lscr#>
 PREFIX orth: <http://purl.org/net/orth#>
 SELECT DISTINCT ?geneEns ?uniprot ?annotation_text {
-	SERVICE <https://www.bgee.org/sparql/> {
+	{
 		SELECT ?geneEns {
 			?geneB genex:isExpressedIn ?cond ;
 				lscr:xrefEnsemblGene ?geneEns .

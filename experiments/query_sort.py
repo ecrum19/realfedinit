@@ -2,8 +2,6 @@ import os
 import json
 import sys
 
-## TODO: Look into using rdflib-sparql parser (https://github.com/RDFLib/rdflib-sparql/blob/master/rdflib_sparql/parser.py)
-
 def main():
     if len(sys.argv) < 3:
         print("Usage: python3 query-sort.py <input_json_file> <output_path> [service / noservice]")
@@ -63,9 +61,7 @@ def withService(data, out_directory):
             if i.strip() != '':
                 fix_prefix_s_query_text += f"\n{i}"
         
-        s_query_source = item_value.get("target")
-        if s_query_source == "https://sparql.omabrowser.org/sparql":
-            s_query_source = "sparql@https://sparql.omabrowser.org/sparql"
+        s_query_source = "sparql@" + item_value.get("target")
 
         if s_query_text is None:
             print(f"Skipping item '{item_key}': no 'query' property found.")
@@ -88,7 +84,7 @@ def withService(data, out_directory):
         s_output_filename = f"{base_name}.rq"
         s_full_output_path = os.path.join(output_dir_s, s_output_filename)
 
-        if "%s.sparql" % (base_name) not in excluded:
+        if "%s.rq" % (base_name) not in excluded:
             total += 1
             # for with SERVICE descriptions
             try:
@@ -122,6 +118,7 @@ def withoutService(data, out_directory):
     ]
 
     # Iterate over each item in the "data" dictionary.
+    total = 0
     past_names = []
     for item_key, item_value in data["data"].items():
         s_query_text = item_value.get("query")
@@ -206,6 +203,16 @@ def withoutService(data, out_directory):
         ns_output_filename = f"{base_name}_ns.rq"
         ns_full_output_path = os.path.join(output_dir_ns, ns_output_filename)
 
+
+        if "%s_ns.rq" % (base_name) not in excluded:
+            total += 1
+            # for without SERVICE descriptions
+            try:
+                with open(out_directory, 'w', encoding='utf-8') as out_file:
+                    out_file.write("# Datasources: %s%s" % (ns_query_source, fix_prefix_s_query_text))
+                # print(f"Created file: {output_filename}")
+            except Exception as e:
+                print(f"Error writing {ns_output_filename}: {e}")
         # for without SERVICE descriptions
         try:
             with open(ns_full_output_path, 'w', encoding='utf-8') as out_file:
@@ -213,6 +220,7 @@ def withoutService(data, out_directory):
             # print(f"Created file: {output_filename}")
         except Exception as e:
             print(f"Error writing {ns_output_filename}: {e}")
+    print(total)
 
 
 if __name__ == "__main__":

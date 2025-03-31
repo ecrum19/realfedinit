@@ -1,4 +1,4 @@
-# Datasources: https://www.bgee.org/sparql
+# Datasources: sparql@https://www.bgee.org/sparql
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX genex: <http://purl.org/genex#>
 PREFIX lscr: <http://purl.org/lscr#>
