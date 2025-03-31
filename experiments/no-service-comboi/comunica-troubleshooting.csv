@@ -8,8 +8,7 @@ Queries problems:
         Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
 
 3.sparql,OMA+uniprot,>1,76,-,-
-    Invalid SPARQL endpoint response from https://sparql.omabrowser.org/sparql/ (HTTP status 504):
-    timeout
+    Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
 
 5.sparql,SwissLipids,>1,267,-,-
     Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
@@ -18,8 +17,7 @@ Queries problems:
     Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
 
 006.sparql,dgbi,5,5,-,-
-    Invalid SPARQL endpoint response from  https://query.wikidata.org/sparql (HTTP status 429):
-    Rate limit exceeded
+    Actor urn:comunica:default:query-operation/actors#source requires an operation with source annotation.
 
 007.sparql,dgbi,>1,92,-,- (maybe could work...)
     FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
@@ -40,7 +38,7 @@ Queries problems:
     Could not dereference ' https://sparql.omabrowser.org/sparql/'
 
 017.sparql,Bgee,20,20,-,-
-    No Results....
+    No Results.... (check physical query plan)
 
 020.sparql,Bgee,>1,297,-,-
     Invalid SPARQL endpoint response from  https://sparql.omabrowser.org/sparql (HTTP status 406)

@@ -47,29 +47,12 @@ def withService(data, out_directory):
     os.makedirs(output_dir_s, exist_ok=True)
 
     excluded = [
-        "7.sparql",
-        "emi#examples021.sparql",
-        "70_enzymes_interacting_with_molecules_similar_to_dopamine.sparql",
-        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease.sparql",
-        "54.sparql",
-        "60.sparql",
-        "002.sparql",
-        "18a.sparql",
-        "13.sparql",
-        "14.sparql",
-        "17.sparql",
-        "18.sparql",
-        "19.sparql",
-        "20.sparql",
-        "36.sparql",
-        "46.sparql",
-        "92_uniprot_bioregistry_iri_translation.sparql",
-        "99_uniprot_identifiers_org_translation.sparql",
-        "90_uniprot_affected_by_metabolic_diseases_using_MeSH.sparql",
-        "7.sparql",
-        "48.sparql",
-        "50.sparql",
-        "emi#examples012.sparql"
+        "13.rq", # server-side error
+        "14.rq", # server-side error
+        "20.rq", # server-side error
+        "46.rq", # server-side error
+        "99_uniprot_identifiers_org_translation.rq",   # server-side error
+        "90_uniprot_affected_by_metabolic_diseases_using_MeSH.rq", # server-side error
     ]
     total = 0
     past_names = []
@@ -101,8 +84,8 @@ def withService(data, out_directory):
             base_name += "a"
         past_names.append(base_name)
 
-        # Append the .sparql extension.
-        s_output_filename = f"{base_name}.sparql"
+        # Append the .rq extension.
+        s_output_filename = f"{base_name}.rq"
         s_full_output_path = os.path.join(output_dir_s, s_output_filename)
 
         if "%s.sparql" % (base_name) not in excluded:
@@ -123,38 +106,26 @@ def withoutService(data, out_directory):
     os.makedirs(output_dir_ns, exist_ok=True)
 
     excluded = [
-        "7",
-        "emi#examples021",
-        "70_enzymes_interacting_with_molecules_similar_to_dopamine",
-        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease",
-        "54",
-        "60",
-        "002",
-        "18a",
-        "13",
-        "14",
-        "17",
-        "18",
-        "19",
-        "20",
-        "36",
-        "46",
-        "92_uniprot_bioregistry_iri_translation",
-        "99_uniprot_identifiers_org_translation",
-        "90_uniprot_affected_by_metabolic_diseases_using_MeSH",
-        "7",
-        "48",
-        "50",
-        "emi#examples012"
+        "13_ns.rq", # server-side error
+        "14_ns.rq", # server-side error
+        "20_ns.rq", # server-side error
+        "46_ns.rq", # server-side error
+        "99_uniprot_identifiers_org_translation_ns.rq",   # server-side error
+        "90_uniprot_affected_by_metabolic_diseases_using_MeSH_ns.rq", # server-side error
+        "70_enzymes_interacting_with_molecules_similar_to_dopamine_ns.rq", # IDSM
+        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease_ns.rq", # IDSM
+        "52_ns.rq.rq,uniprot",  # IDSM
+        "54.rq,uniprot_ns.rq",  # IDSM
+        "60.rq,uniprot_ns.rq",  # IDSM
+        "002_ns.rq",    # IDSM
+        "18a_ns.rq", # IDSM#
     ]
 
     # Iterate over each item in the "data" dictionary.
     past_names = []
     for item_key, item_value in data["data"].items():
         s_query_text = item_value.get("query")
-        ns_query_source = item_value.get("target")
-        if ns_query_source == "https://sparql.omabrowser.org/sparql":
-            ns_query_source = "sparql@https://sparql.omabrowser.org/sparql"
+        ns_query_source = "sparql@" + item_value.get("target")
 
         if s_query_text is None:
             print(f"Skipping item '{item_key}': no 'query' property found.")
@@ -169,17 +140,21 @@ def withoutService(data, out_directory):
         for line in split_query:
             # remove SERVICE description line
             if "SERVICE" in line:
+                tab_count = line.count("\t")
+                tabs = ""
+                for i in range(tab_count+1):
+                    tabs += "\t"
                 line_s = line.split("<")
                 for s in line_s:
                     if ">" in s:
                         source = s.split(">")[0]
                         if "{" in source:
                             source = source[:-1].strip()
-                if source == "https://sparql.omabrowser.org/sparql":
-                    source = "sparql@https://sparql.omabrowser.org/sparql"
+                        source = "sparql@" + source
                 ns_query_source += " %s" % source
                 brace_count += 1
                 curr_service = True
+                ns_query_text += (tabs + "{\n")
             
             # case where both brackets are in same line
             elif "{" in line and "}" in line and curr_service:
@@ -191,18 +166,22 @@ def withoutService(data, out_directory):
                 ns_query_text += "%s\n" % line
 
             # find closing bracket for SERVICE clause
-            elif "}" in line and curr_service:
-                brace_count -= 1
-                if brace_count > 0:
-                    ns_query_text += "%s\n" % line
-                else:
-                    curr_service = False
-                    brace_count = 0
+            # elif "}" in line and curr_service:
+            #     brace_count -= 1
+            #     if brace_count > 0:
+            #         ns_query_text += "%s\n" % line
+            #     else:
+            #         curr_service = False
+            #         brace_count = 0
             
             # fix double bracket syntax
             elif "}}" in line:
+                tab_count = line.count("\t")
+                tabs = ""
+                for i in range(tab_count):
+                    tabs += "\t"
                 rm_one_bracket = line.replace("}}", "}")
-                ns_query_text += "\t\t\t}\n%s\n" % rm_one_bracket
+                ns_query_text += tabs + "}\n" + tabs[:-1] + "%s\n" % rm_one_bracket
 
             # for normal query lines
             else:
@@ -220,11 +199,11 @@ def withoutService(data, out_directory):
         
         # Case where file name is repeated
         if base_name in past_names:
-            base_name = base_name.join("a")
+            base_name += "a"
         past_names.append(base_name)
 
         # Append the .sparql extension.
-        ns_output_filename = f"{base_name}_ns.sparql"
+        ns_output_filename = f"{base_name}_ns.rq"
         ns_full_output_path = os.path.join(output_dir_ns, ns_output_filename)
 
         # for without SERVICE descriptions
