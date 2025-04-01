@@ -106,7 +106,6 @@ def withoutService(data, out_directory):
     
 
     excluded = [
-        "13_ns.rq", # server-side error
         "14_ns.rq", # server-side error
         "20_ns.rq", # server-side error
         "46_ns.rq", # server-side error
@@ -118,7 +117,7 @@ def withoutService(data, out_directory):
         "54.rq,uniprot_ns.rq",  # IDSM
         "60.rq,uniprot_ns.rq",  # IDSM
         "002_ns.rq",    # IDSM
-        "18a_ns.rq", # IDSM#
+        "18a_ns.rq", # IDSM
     ]
 
     # Iterate over each item in the "data" dictionary.
