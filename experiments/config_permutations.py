@@ -204,12 +204,6 @@ def changeExptTemplate(algo_path, option_path, void_path, rate_path, algo_config
         elif '"queryRunnerReplication":' in line:
             updated_lines.append('\t"queryRunnerReplication": 1,\n')
 
-        # change queryRunnerRecordTimestamps and queryRunnerRecordHttpRequests
-        elif 'queryRunnerEndpointAvailabilityCheckTimeout' in line:
-            updated_lines.append(line)
-            updated_lines.append('\t"queryRunnerRecordTimestamps": true,\n')
-            updated_lines.append('\t"queryRunnerRecordHttpRequests": true,\n')
-
         # specify configs to use for experiment
         elif '"configClient":' in line:
             updated_lines.append('\t"configClient": "input/client-config/%FACTOR-type%.json",\n')
@@ -272,12 +266,6 @@ def changeExptJsonService(current_template_file):
     for line in lines:
         if '"queryRunnerReplication":' in line:
             updated_lines.append('\t"queryRunnerReplication": 1,\n')
-
-        # change queryRunnerRecordTimestamps and queryRunnerRecordHttpRequests
-        elif 'queryRunnerEndpointAvailabilityCheckTimeout' in line:
-            updated_lines.append(line)
-            updated_lines.append('\t"queryRunnerRecordTimestamps": true,\n')
-            updated_lines.append('\t"queryRunnerRecordHttpRequests": true,\n')
             
         else:
             updated_lines.append(line)

@@ -7,6 +7,7 @@ node_modules/
 /experiments/*/
 /experiments/*/node_modules
 !/experiments/*/combinations/*/output
+!/experiments/*/jbr-experiment.json
 /generated/*
 !/generated/.keep
 /output/*
