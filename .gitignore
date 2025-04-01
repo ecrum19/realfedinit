@@ -5,6 +5,8 @@ node_modules/
 /node_modules
 
 /experiments/*/
+/experiments/*/node_modules
+!/experiments/*/combinations/*/output
 /generated/*
 !/generated/.keep
 /output/*
