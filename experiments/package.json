@@ -2,7 +2,6 @@
   "dependencies": {
     "@jbr-experiment/sparql-custom": "^5.5.0",
     "@jbr-hook/sparql-endpoint-comunica": "^5.5.0",
-    "cross-env": "^7.0.3",
     "jbr": "^5.5.0"
   },
   "scripts": {
