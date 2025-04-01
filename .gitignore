@@ -3,7 +3,8 @@ node_modules/
 
 /componentsjs-error-state.json
 /node_modules
-experiments/default_service/input/queries/*
+
+/experiments/*/
 /generated/*
 !/generated/.keep
 /output/*
