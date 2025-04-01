@@ -25,8 +25,6 @@ done
 # The new run index is largest+1
 nextNumber=$((largest + 1))
 
-screen -S "experiment-run-${nextNumber}"
-
 echo "Highest folder suffix found: $largest"
 echo "Using next folder suffix:   $nextNumber"
 echo
