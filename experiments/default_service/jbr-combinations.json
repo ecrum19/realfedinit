@@ -1,9 +1,0 @@
-{
-  "@context": [
-    "https://linkedsoftwaredependencies.org/bundles/npm/jbr/^5.0.0/components/context.jsonld"
-  ],
-  "@id": "urn:jbr:default_service-combinations",
-  "@type": "FullFactorialCombinationProvider",
-  "commonGenerated": false,
-  "factors": {}
-}
