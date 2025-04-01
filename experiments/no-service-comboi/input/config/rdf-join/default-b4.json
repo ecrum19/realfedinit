@@ -37,7 +37,7 @@
       "@type": "ActorRdfJoinMultiBindSource",
       "mediatorJoinSelectivity": { "@id": "urn:comunica:default:rdf-join-selectivity/mediators#main" },
       "mediatorJoinEntriesSort": { "@id": "urn:comunica:default:rdf-join-entries-sort/mediators#main" },
-      "blockSize": 24,
+      "blockSize": 4,
       "beforeActors": [
         { "@id": "urn:comunica:default:rdf-join/actors#inner-multi-smallest" },
         { "@id": "urn:comunica:default:rdf-join/actors#inner-multi-bind" },

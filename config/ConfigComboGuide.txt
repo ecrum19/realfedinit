@@ -1,8 +1,8 @@
 /rdf-join/actors-inner.json:
 1. default
     1a. DEFAULT: inner-multi-bind-source --> "blockSize": 16
-    1b. SMALL: inner-multi-bind-source --> "blockSize": 8
-    1c. LARGE: inner-multi-bind-source --> "blockSize": 24
+    1b. SMALL: inner-multi-bind-source --> "blockSize": 4
+    1c. LARGE: inner-multi-bind-source --> "blockSize": 1000
 
 (with inner-none && inner-single && inner-multi-empty && inner-multi-smallest && inner-multi-smallest-filter-bindings)
 2. only: inner-hash-def && inner-hash-undef
@@ -14,16 +14,16 @@
 /optimize-query-operation/actors.json
 1. ASK: prune-empty-source-operations --> "useAskIfSupported": true
 2. COUNT: prune-empty-source-operations --> "useAskIfSupported": false
-3. VOID: ?? [TODO]
+3. VOID: ActorRdfMetadataExtractVoid
 
 
 /optimize-query-operation/actors.json
 1. AGGRESSIVE: filter-pushdown --> "aggressivePushdown": true
 2. DEFAULT: filter-pushdown --> "aggressivePushdown": false
 
-/something/rate-limiting/config.json [TODO]
-1. YES: ...
-2. NO: ...
+/something/rate-limiting/config.json
+1. actors-limit-rate-on --> "limitByDefault": true, "correctionMultiplier": 1
+2. actors-limit-rate-off --> "limitByDefault": false
 
 optional:
 /optimize-query-operation/actors.json
@@ -33,3 +33,17 @@ optional:
 5. remove: inner-multi-bind-source (bound join)
 6. remove: inner-multi-bind
 7. remove: inner-multi-bind-source && inner-multi-bind
+
+----
+
+Combinations possible:
+
+Matadata -- ASK / COUNT / VOID
+
+Algo - default / default-b4 / default-b1000 / asym-hash / sym-hash / nest-loop / bind
+
+http - rate-limit
+
+filterPushdown - aggresive-fp / default-fp
+
+default
