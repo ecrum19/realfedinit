@@ -29,6 +29,9 @@ echo "Highest folder suffix found: $largest"
 echo "Using next folder suffix:   $nextNumber"
 echo
 
+# for dumb error with missing .gitignore file in NPM package
+cp ../jbr_gitignore/.gitignore "/users/ecrumuge/realfedinit/experiments/node_modules/jbr/lib/templates/.gitignore"
+
 ############################################
 # 2) Execute Workflows
 ############################################
