@@ -7,11 +7,10 @@ COMMAND="./experiment-automation.sh"
 if screen -list | grep -q "\.${SESSION}"; then
     echo "Session '${SESSION}' exists. Resuming and running the experiment commands."
     # Send the command followed by a newline to the session.
-    screen -S "$SESSION" -X stuff "$COMMAND$(printf \\r)"
-    # Optionally, reattach to the session so you can see the output.
-    screen -r "$SESSION"
+    screen -S "$SESSION" -X exec "$COMMAND"
 else
     echo "Session '${SESSION}' does not exist. Creating a new one and running the experiment commands."
     # Create a new detached session and run the command.
-    screen -dmS "$SESSION" bash -c "$COMMAND"
+    screen -S -d -m "$SESSION"
+    screen -S "$SESSION" -X exec "$COMMAND"
 fi
