@@ -45,12 +45,12 @@ def withService(data, out_directory):
     os.makedirs(output_dir_s, exist_ok=True)
 
     excluded = [
-        "13.sparql", # server-side error
-        "14.sparql", # server-side error
-        "20.sparql", # server-side error
-        "46.sparql", # server-side error
-        "99_uniprot_identifiers_org_translation.sparql",   # server-side error
-        "90_uniprot_affected_by_metabolic_diseases_using_MeSH.sparql", # server-side error
+        "13", # server-side error
+        "14", # server-side error
+        "20", # server-side error
+        "46", # server-side error
+        "99_uniprot_identifiers_org_translation",   # server-side error
+        "90_uniprot_affected_by_metabolic_diseases_using_MeSH", # server-side error
     ]
     total = 0
     past_names = []
@@ -84,7 +84,7 @@ def withService(data, out_directory):
         s_output_filename = f"{base_name}.sparql"
         s_full_output_path = os.path.join(output_dir_s, s_output_filename)
 
-        if "%s.rq" % (base_name) not in excluded:
+        if base_name not in excluded:
             total += 1
             # for with SERVICE descriptions
             try:
@@ -93,7 +93,7 @@ def withService(data, out_directory):
                 # print(f"Created file: {output_filename}")
             except Exception as e:
                 print(f"Error writing {s_output_filename}: {e}")
-    print(total)
+    print("Total with service queries:", total)
 
 
 
@@ -104,20 +104,19 @@ def withoutService(data, out_directory):
     except Exception as e:
         print(f"Directory {output_dir_ns} already exists")
     
-
     excluded = [
-        "14_ns.sparql", # server-side error
-        "20_ns.sparql", # server-side error
-        "46_ns.sparql", # server-side error
-        "99_uniprot_identifiers_org_translation_ns.sparql",   # server-side error
-        "90_uniprot_affected_by_metabolic_diseases_using_MeSH_ns.sparql", # server-side error
-        "70_enzymes_interacting_with_molecules_similar_to_dopamine_ns.sparql", # IDSM
-        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease_ns.sparql", # IDSM
-        "52_ns.sparql",  # IDSM
-        "54.sparql",  # IDSM
-        "60.sparql",  # IDSM
-        "002_ns.sparql",    # IDSM
-        "18a_ns.sparql", # IDSM
+        "14", # server-side error
+        "20", # server-side error
+        "46", # server-side error
+        "99_uniprot_identifiers_org_translation",   # server-side error
+        "90_uniprot_affected_by_metabolic_diseases_using_MeSH", # server-side error
+        "70_enzymes_interacting_with_molecules_similar_to_dopamine", # IDSM
+        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease", # IDSM
+        "52",  # IDSM
+        "54",  # IDSM
+        "60",  # IDSM
+        "002",    # IDSM
+        "18a", # IDSM
     ]
 
     # Iterate over each item in the "data" dictionary.
@@ -206,24 +205,17 @@ def withoutService(data, out_directory):
         ns_output_filename = f"{base_name}_ns.sparql"
         ns_full_output_path = os.path.join(output_dir_ns, ns_output_filename)
 
-
-        if "%s_ns.rq" % (base_name) not in excluded:
+        print(base_name not in excluded, base_name)
+        if str(base_name) not in excluded:
             total += 1
             # for without SERVICE descriptions
             try:
                 with open(ns_full_output_path, 'w', encoding='utf-8') as out_file:
-                    out_file.write("# Datasources: %s" % (ns_query_source))
+                    out_file.write("# Datasources: %s\n%s" % (ns_query_source, ns_query_text.rstrip('\n')))
                 # print(f"Created file: {output_filename}")
             except Exception as e:
                 print(f"Error writing {ns_output_filename}: {e}")
-        # for without SERVICE descriptions
-        try:
-            with open(ns_full_output_path, 'w', encoding='utf-8') as out_file:
-                out_file.write("# Datasources: %s\n%s" % (ns_query_source, ns_query_text.rstrip('\n')))
-            # print(f"Created file: {output_filename}")
-        except Exception as e:
-            print(f"Error writing {ns_output_filename}: {e}")
-    print(total)
+    print("Total no-service queries:", total)
 
 
 if __name__ == "__main__":
