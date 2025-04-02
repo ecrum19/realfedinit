@@ -205,7 +205,6 @@ def withoutService(data, out_directory):
         ns_output_filename = f"{base_name}_ns.sparql"
         ns_full_output_path = os.path.join(output_dir_ns, ns_output_filename)
 
-        print(base_name not in excluded, base_name)
         if str(base_name) not in excluded:
             total += 1
             # for without SERVICE descriptions
