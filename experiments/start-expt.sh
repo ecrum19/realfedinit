@@ -11,6 +11,6 @@ if screen -list | grep -q "\.${SESSION}"; then
 else
     echo "Session '${SESSION}' does not exist. Creating a new one and running the experiment commands."
     # Create a new detached session and run the command.
-    screen -S -d -m "$SESSION"
+    screen -S "$SESSION" -d -m
     screen -S "$SESSION" -X exec "$COMMAND"
 fi
