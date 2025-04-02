@@ -45,12 +45,12 @@ def withService(data, out_directory):
     os.makedirs(output_dir_s, exist_ok=True)
 
     excluded = [
-        "13.rq", # server-side error
-        "14.rq", # server-side error
-        "20.rq", # server-side error
-        "46.rq", # server-side error
-        "99_uniprot_identifiers_org_translation.rq",   # server-side error
-        "90_uniprot_affected_by_metabolic_diseases_using_MeSH.rq", # server-side error
+        "13.sparql", # server-side error
+        "14.sparql", # server-side error
+        "20.sparql", # server-side error
+        "46.sparql", # server-side error
+        "99_uniprot_identifiers_org_translation.sparql",   # server-side error
+        "90_uniprot_affected_by_metabolic_diseases_using_MeSH.sparql", # server-side error
     ]
     total = 0
     past_names = []
@@ -81,7 +81,7 @@ def withService(data, out_directory):
         past_names.append(base_name)
 
         # Append the .rq extension.
-        s_output_filename = f"{base_name}.rq"
+        s_output_filename = f"{base_name}.sparql"
         s_full_output_path = os.path.join(output_dir_s, s_output_filename)
 
         if "%s.rq" % (base_name) not in excluded:
@@ -106,18 +106,18 @@ def withoutService(data, out_directory):
     
 
     excluded = [
-        "14_ns.rq", # server-side error
-        "20_ns.rq", # server-side error
-        "46_ns.rq", # server-side error
-        "99_uniprot_identifiers_org_translation_ns.rq",   # server-side error
-        "90_uniprot_affected_by_metabolic_diseases_using_MeSH_ns.rq", # server-side error
-        "70_enzymes_interacting_with_molecules_similar_to_dopamine_ns.rq", # IDSM
-        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease_ns.rq", # IDSM
-        "52_ns.rq.rq,uniprot",  # IDSM
-        "54.rq,uniprot_ns.rq",  # IDSM
-        "60.rq,uniprot_ns.rq",  # IDSM
-        "002_ns.rq",    # IDSM
-        "18a_ns.rq", # IDSM
+        "14_ns.sparql", # server-side error
+        "20_ns.sparql", # server-side error
+        "46_ns.sparql", # server-side error
+        "99_uniprot_identifiers_org_translation_ns.sparql",   # server-side error
+        "90_uniprot_affected_by_metabolic_diseases_using_MeSH_ns.sparql", # server-side error
+        "70_enzymes_interacting_with_molecules_similar_to_dopamine_ns.sparql", # IDSM
+        "71_enzymes_interacting_with_molecules_similar_to_dopamine_with_variants_related_to_disease_ns.sparql", # IDSM
+        "52_ns.sparql",  # IDSM
+        "54.sparql",  # IDSM
+        "60.sparql",  # IDSM
+        "002_ns.sparql",    # IDSM
+        "18a_ns.sparql", # IDSM
     ]
 
     # Iterate over each item in the "data" dictionary.
@@ -203,7 +203,7 @@ def withoutService(data, out_directory):
         past_names.append(base_name)
 
         # Append the .rq extension.
-        ns_output_filename = f"{base_name}_ns.rq"
+        ns_output_filename = f"{base_name}_ns.sparql"
         ns_full_output_path = os.path.join(output_dir_ns, ns_output_filename)
 
 
