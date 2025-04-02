@@ -29,9 +29,6 @@ echo "Highest folder suffix found: $largest"
 echo "Using next folder suffix:   $nextNumber"
 echo
 
-# for dumb error with missing .gitignore file in NPM package
-cp ../jbr_gitignore/.gitignore "/users/ecrumuge/realfedinit/experiments/node_modules/jbr/lib/templates/.gitignore"
-
 ############################################
 # 2) Execute Workflows
 ############################################
@@ -39,12 +36,12 @@ cp ../jbr_gitignore/.gitignore "/users/ecrumuge/realfedinit/experiments/node_mod
 # -- With Service Clause workflow --
 
 echo "==> Starting With Service Clause workflow..."
-npm run jbr init sparql-custom "default-service-${nextNumber}"
+jbr init sparql-custom "default-service-${nextNumber}"
 mkdir "default-service-${nextNumber}/input/queries"
 python3 query_sort.py sib-swiss-federated-queries.json "default-service-${nextNumber}/" service
 
 cd "default-service-${nextNumber}"
-npm run jbr set-hook hookSparqlEndpoint sparql-endpoint-comunica
+jbr set-hook hookSparqlEndpoint sparql-endpoint-comunica
 cd ..
 
 python3 config_permutations.py "default-service-${nextNumber}/"
@@ -61,21 +58,21 @@ echo
 # -- No-Service Clause workflow --
 
 echo "==> Starting No-Service Clause experiments..."
-npm run jbr init -c sparql-custom "no-service-${nextNumber}"
+jbr init -c sparql-custom "no-service-${nextNumber}"
 mkdir "no-service-${nextNumber}/input/queries"
 python3 query_sort.py sib-swiss-federated-queries.json "no-service-${nextNumber}/" noservice
 
 cp -r ../config "no-service-${nextNumber}/input/config"
 
 cd "no-service-${nextNumber}"
-npm run jbr set-hook hookSparqlEndpoint sparql-endpoint-comunica
+jbr set-hook hookSparqlEndpoint sparql-endpoint-comunica
 cd ..
 
 mkdir "no-service-${nextNumber}/input/client-config"
 python3 config_permutations.py "no-service-${nextNumber}/input/config/"
 
 cd "no-service-${nextNumber}"
-npm run jbr generate-combinations
+jbr generate-combinations
 
 npm run jbr -- prepare
 nohup npm run jbr -- run > "no-service-${nextNumber}.log" 2>&1 &
