@@ -25,9 +25,10 @@ done
 # The new run index is largest+1
 nextNumber=$((largest + 1))
 
+
+
 echo "Highest folder suffix found: $largest"
 echo "Using next folder suffix:   $nextNumber"
-echo
 
 ############################################
 # 2) Execute Workflows
@@ -50,6 +51,8 @@ cd "default-service-${nextNumber}"
 
 npm run jbr -- prepare
 nohup npm run jbr -- run > "default-service-${nextNumber}.log" 2>&1 &
+wait
+
 cd ..
 
 echo "Workflow complete for: default-service-${nextNumber}"
@@ -76,6 +79,8 @@ jbr generate-combinations
 
 npm run jbr -- prepare
 nohup npm run jbr -- run > "no-service-${nextNumber}.log" 2>&1 &
+wait
+
 cd ..
 
 echo "Workflow complete for: no-service-${nextNumber}"
