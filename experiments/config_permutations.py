@@ -205,7 +205,7 @@ def changeExptTemplate(algo_path, option_path, void_path, rate_path, algo_config
             updated_lines.append('\t"queryRunnerReplication": 1,\n')
         
         # remove warmup rounds
-        elif '"queryRunnerWarmupRounds":' in line:
+        elif '"queryRunnerWarmupRounds"' in line:
             updated_lines.append('\t"queryRunnerWarmupRounds": 0,\n')
 
         # specify configs to use for experiment
@@ -292,7 +292,7 @@ def changeClientConfigService(config_client_path):
             updated_lines.append('\t\t"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^4.0.0/components/context.jsonld"\n') # fix this line...
         
         # remove warmup rounds
-        elif '"queryRunnerWarmupRounds":' in line:
+        elif '"queryRunnerWarmupRounds"' in line:
             updated_lines.append('"queryRunnerWarmupRounds": 0,\n')
         
         # increase query timeout
@@ -318,7 +318,7 @@ def changeDockerFile(current_docker_file):
     for line in lines:
         # changes Comunica version used
         if "FROM" in line:
-            updated_lines.append("FROM comunica/query-sparql@sha256:ee52195387cc7879be8aa4844ed4658dc5b701ea8adaf2487954f918fb1de338\n")
+            updated_lines.append("FROM comunica/query-sparql@sha256:0b041434dea26f84f4e6ce01649b232157276c878173e58b3dcaaf1150a69d56\n")
         # changes docker command to include "--contextOverride"
         elif "CMD" in line:
             updated_lines.append(
