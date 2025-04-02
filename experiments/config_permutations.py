@@ -203,6 +203,10 @@ def changeExptTemplate(algo_path, option_path, void_path, rate_path, algo_config
         # change replication number
         elif '"queryRunnerReplication":' in line:
             updated_lines.append('\t"queryRunnerReplication": 1,\n')
+        
+        # remove warmup rounds
+        elif '"queryRunnerWarmupRounds":' in line:
+            updated_lines.append('\t"queryRunnerWarmupRounds": 0,\n')
 
         # specify configs to use for experiment
         elif '"configClient":' in line:
@@ -265,7 +269,7 @@ def changeExptJsonService(current_template_file):
     updated_lines = []
     for line in lines:
         if '"queryRunnerReplication":' in line:
-            updated_lines.append('\t"queryRunnerReplication": 1,\n')
+            updated_lines.append('"queryRunnerReplication": 1,\n')
             
         else:
             updated_lines.append(line)
@@ -286,6 +290,14 @@ def changeClientConfigService(config_client_path):
     for line in lines:
         if '"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^2.0.0/components/context.jsonld"' in line:
             updated_lines.append('\t\t"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^4.0.0/components/context.jsonld"\n') # fix this line...
+        
+        # remove warmup rounds
+        elif '"queryRunnerWarmupRounds":' in line:
+            updated_lines.append('"queryRunnerWarmupRounds": 0,\n')
+        
+        # increase query timeout
+        elif '"queryTimeout": 300,' in line:
+            updated_lines.append('\t\t"queryTimeout": 600,\n')
         else:
             updated_lines.append(line)
     
