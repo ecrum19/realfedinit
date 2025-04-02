@@ -50,8 +50,11 @@ python3 config_permutations.py "default-service-${nextNumber}/"
 cd "default-service-${nextNumber}"
 
 npm run jbr -- prepare
+
+echo "default-service-${nextNumber} experiment has STARTED"
 nohup npm run jbr -- run > "default-service-${nextNumber}.log" 2>&1 &
 wait
+echo "default-service-${nextNumber} experiment has FINISHED"
 
 cd ..
 
@@ -78,8 +81,11 @@ cd "no-service-${nextNumber}"
 jbr generate-combinations
 
 npm run jbr -- prepare
+
+echo "no-service-${nextNumber} experiment has STARTED"
 nohup npm run jbr -- run > "no-service-${nextNumber}.log" 2>&1 &
 wait
+echo "no-service-${nextNumber} experiment has FINISHED"
 
 cd ..
 
