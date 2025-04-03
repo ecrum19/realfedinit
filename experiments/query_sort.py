@@ -61,7 +61,7 @@ def withService(data, out_directory):
             if i.strip() != '':
                 fix_prefix_s_query_text += f"\n{i}"
         
-        s_query_source = "sparql@" + item_value.get("target")
+        s_query_source = item_value.get("target")
 
         if s_query_text is None:
             print(f"Skipping item '{item_key}': no 'query' property found.")
@@ -81,7 +81,7 @@ def withService(data, out_directory):
         past_names.append(base_name)
 
         # Append the .rq extension.
-        s_output_filename = f"{base_name}.sparql"
+        s_output_filename = f"{base_name}.rq"
         s_full_output_path = os.path.join(output_dir_s, s_output_filename)
 
         if base_name not in excluded:
