@@ -269,7 +269,7 @@ def changeExptJsonService(current_template_file):
     updated_lines = []
     for line in lines:
         if '"queryRunnerReplication":' in line:
-            updated_lines.append('\t"queryRunnerReplication": 0,\n')
+            updated_lines.append('\t"queryRunnerReplication": 1,\n')
         elif '"queryRunnerWarmupRounds"' in line:
             updated_lines.append('\t"queryRunnerWarmupRounds": 0,\n')
         elif '"queryTimeout"' in line:
