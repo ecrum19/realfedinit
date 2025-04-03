@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "@jbr-experiment/sparql-custom": "^5.5.0",
-    "@jbr-hook/sparql-endpoint-comunica": "^5.5.0",
-    "jbr": "^5.5.0"
+    "@jbr-experiment/sparql-custom": "^5.7.1",
+    "@jbr-hook/sparql-endpoint-comunica": "^5.7.1",
+    "jbr": "^5.7.1"
   },
   "scripts": {
     "jbr": "jbr"
