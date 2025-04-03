@@ -269,9 +269,11 @@ def changeExptJsonService(current_template_file):
     updated_lines = []
     for line in lines:
         if '"queryRunnerReplication":' in line:
-            updated_lines.append('"queryRunnerReplication": 0,\n')
+            updated_lines.append('\t"queryRunnerReplication": 0,\n')
         elif '"queryRunnerWarmupRounds"' in line:
             updated_lines.append('\t"queryRunnerWarmupRounds": 0,\n')
+        elif '"queryTimeout"' in line:
+            updated_lines.append('\t"queryTimeout": 500,\n')
         else:
             updated_lines.append(line)
     
@@ -290,7 +292,7 @@ def changeClientConfigService(config_client_path):
     updated_lines = []
     for line in lines:
         if '"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^2.0.0/components/context.jsonld"' in line:
-            updated_lines.append('\t\t"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^4.0.0/components/context.jsonld"\n')
+            updated_lines.append('\t"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^4.0.0/components/context.jsonld"\n')
         else:
             updated_lines.append(line)
     
