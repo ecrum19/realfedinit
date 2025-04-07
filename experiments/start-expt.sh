@@ -3,6 +3,8 @@
 SESSION="experiments"
 COMMAND="./experiment-automation.sh"
 
+chmod +x experiment-automation.sh
+
 # Check if the screen session exists by looking for its name in the list.
 if screen -list | grep -q "\.${SESSION}"; then
     echo "Session '${SESSION}' exists. Resuming and running the experiment commands."
