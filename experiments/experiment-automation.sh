@@ -41,11 +41,13 @@ jbr init sparql-custom "default-service-${nextNumber}"
 mkdir "default-service-${nextNumber}/input/queries"
 python3 query_sort.py sib-swiss-federated-queries.json "default-service-${nextNumber}/" service
 
+cp -r ../config "default-service-${nextNumber}/input/config"
+
 cd "default-service-${nextNumber}"
 jbr set-hook hookSparqlEndpoint sparql-endpoint-comunica
 cd ..
 
-python3 config_permutations.py "default-service-${nextNumber}/"
+python3 config_permutations.py "default-service-${nextNumber}/input/config/"
 
 cd "default-service-${nextNumber}"
 

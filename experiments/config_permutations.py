@@ -8,11 +8,12 @@ class Config:
         self.rate_config = rate_config
 
 class Config_Direstories:
-    def __init__(self, optimize_dir, void_dir, join_dir, rate_dir):
+    def __init__(self, optimize_dir, void_dir, join_dir, rate_dir, source_dir):
         self.optimize_files = optimize_dir
         self.void_files = void_dir
         self.join_files = join_dir
         self.rate_files = rate_dir
+        self.source_files = source_dir
 
 def listFilePaths(directory):
     """Return a sorted list of file paths in the given directory."""
@@ -49,7 +50,7 @@ def listConfigNames(files):
         names_list.append(get_base_name(f))
     return names_list
 
-def new_config(current_config_path, new_option_line, new_algo_line, new_rate_line, output_file):
+def new_config(current_config_path, new_option_line, new_algo_line, new_rate_line, new_source_line, output_file):
     """
     Replaces the line that contains 
     "ccqs:config/optimize-query-operation/actors.json",
@@ -60,6 +61,7 @@ def new_config(current_config_path, new_option_line, new_algo_line, new_rate_lin
       new_line (str): The new line to replace the target line.
       output_file (str): File path to write the modified content.
     """
+
     # Determine the search strings based on the new_option_line
     if 'VoID' in new_option_line:
         search_option_string = '"ccqs:config/rdf-metadata-extract/actors.json",'
@@ -67,6 +69,7 @@ def new_config(current_config_path, new_option_line, new_algo_line, new_rate_lin
         search_option_string = '"ccqs:config/optimize-query-operation/actors.json",'
     search_algo_string = '"ccqs:config/rdf-join/actors.json",'
     search_rate_string = '"ccqs:config/http/actors.json",'
+    search_source_identify = '"ccqs:config/query-source-identify-hypermedia/actors.json"'
 
     
     # Read the default config file line by line.
@@ -85,6 +88,9 @@ def new_config(current_config_path, new_option_line, new_algo_line, new_rate_lin
         # rate limit config
         elif search_rate_string in line:
             updated_lines.append(new_rate_line if new_rate_line.endswith('\n') else new_rate_line + '\n')
+        # make all sources be identified as SPARQL Endpoints
+        elif search_source_identify in line:
+            updated_lines.append(new_source_line if new_source_line.endswith('\n') else new_source_line + '\n')
         # all other lines
         else:
             updated_lines.append(line)
@@ -131,7 +137,7 @@ def determinePermutations(algorithms, options, rates):
     return combinations
 
 
-def writeClientConfigs(in_path, algorithm_names, option_names, rate_names, algoithm_files, option_files, rate_files, config_combos):
+def writeClientConfigs(in_path, algorithm_names, option_names, rate_names, algoithm_files, option_files, rate_files, source_files, config_combos):
     """
     creates new client config files with the changes based on permutations
     """
@@ -152,13 +158,15 @@ def writeClientConfigs(in_path, algorithm_names, option_names, rate_names, algoi
         wanted_option_config = f'\t\t"{option_files[option_index]}",'
         wanted_algo_config = f'\t\t"{algoithm_files[algo_index]}",'
         wanted_rate_config = f'\t\t"{rate_files[rate_index]}",'
+        # source config
+        wanted_source_config = f'\t\t"{source_files[0]}",'
 
         # file name change
         outfile = f"{output_path}{wanted_option}_{wanted_algo}_{wanted_rate}.json"
-        new_config(default_config, wanted_option_config, wanted_algo_config, wanted_rate_config, outfile)
+        new_config(default_config, wanted_option_config, wanted_algo_config, wanted_rate_config, wanted_source_config, outfile)
 
 
-def changeExptTemplate(algo_path, option_path, void_path, rate_path, algo_configs, option_configs, rate_configs, current_template_file):
+def changeExptTemplate(algo_path, option_path, void_path, rate_path, source_path, algo_configs, option_configs, rate_configs, source_configs, current_template_file):
     """
     creates new client config files with the new config files in the "additionalBinds" parameter for permutations
     """
@@ -169,10 +177,12 @@ def changeExptTemplate(algo_path, option_path, void_path, rate_path, algo_config
     option_split = option_path.split('/')
     void_split = void_path.split('/')
     rate_split = rate_path.split('/')
+    source_split = source_path.split('/')
     algo_input_path = '/'.join(algo_split[1:])
     option_input_path = '/'.join(option_split[1:])
     void_input_path = '/'.join(void_split[1:])
     rate_input_path = '/'.join(rate_split[1:])
+    source_input_path = '/'.join(source_split[1:])
 
     target_line = '"additionalBinds": [],'
     # Create a new list of lines with the target lines replaced.
@@ -182,22 +192,25 @@ def changeExptTemplate(algo_path, option_path, void_path, rate_path, algo_config
         # find targeted line config
         if target_line in line:
             updated_lines.append('\t"additionalBinds": [\n')
+            # add source config
+            for sfile in source_configs:
+                updated_lines.append(f'\t\t"/{source_input_path}{sfile}:/tmp/{sfile}",\n')
             # add algorithm configs
             for afile in algo_configs:
-                updated_lines.append(f'\t\t"/{algo_input_path}/{afile}:/tmp/{afile}",\n')
+                updated_lines.append(f'\t\t"/{algo_input_path}{afile}:/tmp/{afile}",\n')
             # add option configs
             for ofile in option_configs:
                 #special case for VoID config
                 if "VoID" in ofile:
-                    updated_lines.append(f'\t\t"/{void_input_path}/{ofile}:/tmp/{ofile}",\n')
+                    updated_lines.append(f'\t\t"/{void_input_path}{ofile}:/tmp/{ofile}",\n')
                 else:
-                    updated_lines.append(f'\t\t"/{option_input_path}/{ofile}:/tmp/{ofile}",\n')
+                    updated_lines.append(f'\t\t"/{option_input_path}{ofile}:/tmp/{ofile}",\n')
             for rfile in rate_configs:
                 # include comma for all but last file
                 if rate_configs.index(rfile) < len(rate_configs)-1:
-                    updated_lines.append(f'\t\t"/{rate_input_path}/{rfile}:/tmp/{rfile}",\n')
+                    updated_lines.append(f'\t\t"/{rate_input_path}{rfile}:/tmp/{rfile}",\n')
                 else:
-                    updated_lines.append(f'\t\t"/{rate_input_path}/{rfile}:/tmp/{rfile}"\n')
+                    updated_lines.append(f'\t\t"/{rate_input_path}{rfile}:/tmp/{rfile}"\n')
             updated_lines.append("\t],\n")
         
         # change replication number
@@ -259,21 +272,33 @@ def changeCombJson(current_comb_file, combos_added):
     with open(current_comb_file, 'w') as f:
         f.writelines(updated_lines)
 
-def changeExptJsonService(current_template_file):
+def changeExptJsonService(source_path, source_configs, current_template_file):
     """
     makes changes to jbr-experiment.json file
     """
+    source_split = source_path.split('/')
+    source_input_path = '/'.join(source_split[1:])
+    target_line = '"additionalBinds": [],'
+
     with open(current_template_file, 'r') as f:
         lines = f.readlines()
 
     updated_lines = []
     for line in lines:
-        if '"queryRunnerReplication":' in line:
+        # custom configs
+        if target_line in line:
+            updated_lines.append('\t\t"additionalBinds": [\n')
+            # add source config
+            for sfile in source_configs:
+                updated_lines.append(f'\t\t\t"/{source_input_path}{sfile}:/tmp/{sfile}"\n')
+            updated_lines.append("\t\t],\n")
+        # other changes
+        elif '"queryRunnerReplication":' in line:
             updated_lines.append('\t"queryRunnerReplication": 1,\n')
         elif '"queryRunnerWarmupRounds"' in line:
             updated_lines.append('\t"queryRunnerWarmupRounds": 0,\n')
         elif '"queryTimeout"' in line:
-            updated_lines.append('\t"queryTimeout": 500,\n')
+            updated_lines.append('\t\t"queryTimeout": 500,\n')
         else:
             updated_lines.append(line)
     
@@ -282,17 +307,23 @@ def changeExptJsonService(current_template_file):
         f.writelines(updated_lines)
 
 
-def changeClientConfigService(config_client_path):
+def changeClientConfigService(source_files, config_client_path):
     """
     changes cofig-client.json file to use Comuniva v4
     """
-    with open(config_client_path, 'r') as f:
+    default_config = "../config/default.json"
+
+    search_source_identify = '"ccqs:config/query-source-identify-hypermedia/actors.json"'
+    wanted_source_config = f'\t\t"{source_files[0]}",'
+
+    with open(default_config, 'r') as f:
         lines = f.readlines()
     
     updated_lines = []
     for line in lines:
-        if '"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^2.0.0/components/context.jsonld"' in line:
-            updated_lines.append('\t"https://linkedsoftwaredependencies.org/bundles/npm/@comunica/config-query-sparql/^4.0.0/components/context.jsonld"\n')
+        # changes all sources to be recognized as SPARQL endpoints
+        if search_source_identify in line:
+            updated_lines.append(wanted_source_config if wanted_source_config.endswith('\n') else wanted_source_config + '\n')
         else:
             updated_lines.append(line)
     
@@ -338,9 +369,13 @@ def main():
 
     # for default-service experiments
     if "default" in config_dir:
+        def_source_dir = f"{config_dir}query-source-identify-hypermedia/"
+        def_source_dirs = listFilePaths(def_source_dir)
+        def_sourceFiles = listConfigFiles(def_source_dirs)
+
         changeDockerFile(f"{expt_dir}input/dockerfiles/Dockerfile-client")
-        changeExptJsonService(f"{expt_dir}jbr-experiment.json")
-        changeClientConfigService(f"{expt_dir}input/config-client.json")
+        changeExptJsonService(def_source_dir, def_sourceFiles, f"{expt_dir}jbr-experiment.json")
+        changeClientConfigService(def_sourceFiles, f"{expt_dir}input/config-client.json")
     
     # for no-service experiments
     else:
@@ -352,6 +387,7 @@ def main():
         void_dir = f"{config_dir}rdf-metadata-extract/"
         join_dir = f"{config_dir}rdf-join/"
         rate_dir = f"{config_dir}http/"
+        source_dir = f"{config_dir}query-source-identify-hypermedia/"
 
 
         # all config paths
@@ -359,7 +395,8 @@ def main():
             optimize_dir=listFilePaths(optimize_dir),
             void_dir=listFilePaths(void_dir),
             join_dir=listFilePaths(join_dir),
-            rate_dir=listFilePaths(rate_dir)
+            rate_dir=listFilePaths(rate_dir),
+            source_dir=listFilePaths(source_dir)
         )
         
         # all config files
@@ -367,6 +404,7 @@ def main():
         optionFiles = listConfigFiles(allPaths.optimize_files)
         optionFiles.extend(listConfigFiles(allPaths.void_files))
         rateFiles = listConfigFiles(allPaths.rate_files)
+        sourceFiles = listConfigFiles(allPaths.source_files)
 
     
         # all config names
@@ -381,8 +419,8 @@ def main():
         # print(count)
 
         changeDockerFile(docker_dir+"Dockerfile-client")
-        writeClientConfigs(input_dir, algoNames, optionNames, rateNames, algoFiles, optionFiles, rateFiles, all_combos)
-        changeExptTemplate(join_dir, optimize_dir, void_dir,  rate_dir, algoFiles, optionFiles, rateFiles, f"{expt_dir}jbr-experiment.json.template")
+        writeClientConfigs(input_dir, algoNames, optionNames, rateNames, algoFiles, optionFiles, rateFiles, sourceFiles, all_combos)
+        changeExptTemplate(join_dir, optimize_dir, void_dir,  rate_dir, source_dir, algoFiles, optionFiles, rateFiles, sourceFiles, f"{expt_dir}jbr-experiment.json.template")
         changeCombJson(f"{expt_dir}jbr-combinations.json", all_combos)
 
 
