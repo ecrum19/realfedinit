@@ -124,7 +124,7 @@ def withoutService(data, out_directory):
     past_names = []
     for item_key, item_value in data["data"].items():
         s_query_text = item_value.get("query")
-        ns_query_source = "sparql@" + item_value.get("target")
+        ns_query_source = item_value.get("target")
 
         if s_query_text is None:
             print(f"Skipping item '{item_key}': no 'query' property found.")
@@ -149,7 +149,6 @@ def withoutService(data, out_directory):
                         source = s.split(">")[0]
                         if "{" in source:
                             source = source[:-1].strip()
-                        source = "sparql@" + source
                 ns_query_source += " %s" % source
                 brace_count += 1
                 curr_service = True
@@ -202,7 +201,7 @@ def withoutService(data, out_directory):
         past_names.append(base_name)
 
         # Append the .rq extension.
-        ns_output_filename = f"{base_name}_ns.sparql"
+        ns_output_filename = f"{base_name}_ns.rq"
         ns_full_output_path = os.path.join(output_dir_ns, ns_output_filename)
 
         if str(base_name) not in excluded:
