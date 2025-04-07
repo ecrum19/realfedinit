@@ -344,7 +344,7 @@ def changeDockerFile(current_docker_file):
     for line in lines:
         # changes Comunica version used
         if "FROM" in line:
-            updated_lines.append("FROM comunica/query-sparql@sha256:0b041434dea26f84f4e6ce01649b232157276c878173e58b3dcaaf1150a69d56\n")
+            updated_lines.append("FROM comunica/query-sparql@sha256:7b3d5ee38b320adc2912878ed58bcfec0f082cb3583d61c1417e03ea5ec53b3f\n")
         # changes docker command to include "--contextOverride"
         elif "CMD" in line:
             updated_lines.append(
