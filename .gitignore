@@ -10,12 +10,10 @@ node_modules/
 !/experiments/*/jbr-experiment.json
 /generated/*
 !/generated/.keep
-/output/*
-!/output/.keep
+!/experiments/*/output/*
 /combinations/*/generated/*
 !/combinations/*/generated/.keep
 /combinations/*/output/*
-!/combinations/*/output/.keep
 
 # Logs
 logs/
