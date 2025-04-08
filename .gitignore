@@ -4,16 +4,14 @@ node_modules/
 /componentsjs-error-state.json
 /node_modules
 
+interpret_results.py
+
 /experiments/*/
+!/experiments/*/output/
 /experiments/*/node_modules
-!/experiments/*/combinations/*/output
-!/experiments/*/jbr-experiment.json
+!/combinations/*/jbr-experiment.json
 /generated/*
 !/generated/.keep
-!/experiments/*/output/*
-/combinations/*/generated/*
-!/combinations/*/generated/.keep
-/combinations/*/output/*
 
 # Logs
 logs/
