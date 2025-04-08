@@ -213,6 +213,9 @@ def changeExptTemplate(algo_path, option_path, void_path, rate_path, source_path
         # remove warmup rounds
         elif '"queryRunnerWarmupRounds"' in line:
             updated_lines.append('\t"queryRunnerWarmupRounds": 0,\n')
+        
+        elif '"queryTimeout"' in line:
+            updated_lines.append('\t\t"queryTimeout": 2000,\n')
 
         # specify configs to use for experiment
         elif '"configClient":' in line:
@@ -291,7 +294,7 @@ def changeExptJsonService(source_path, source_configs, current_template_file):
         elif '"queryRunnerWarmupRounds"' in line:
             updated_lines.append('\t"queryRunnerWarmupRounds": 0,\n')
         elif '"queryTimeout"' in line:
-            updated_lines.append('\t\t"queryTimeout": 500,\n')
+            updated_lines.append('\t\t"queryTimeout": 2000,\n')
         else:
             updated_lines.append(line)
     
