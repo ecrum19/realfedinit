@@ -119,13 +119,6 @@ def determinePermutations(algorithms, options, rates):
         rate_config="rate-on"
     ))
 
-    # aggfp+ask + default w/o rate-limit for initialization
-    combinations.append(Config(
-        optimize_config="aggfp-ask",
-        join_config="default",
-        rate_config="rate-off"
-    ))
-
     # for r in rates:
     #     for a in algorithms:
     #         for o in options:
