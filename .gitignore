@@ -1,6 +1,9 @@
 # Node modules
 node_modules/
 
+*.txt
+!ConfigComboGuide.txt
+
 /componentsjs-error-state.json
 /node_modules
 
