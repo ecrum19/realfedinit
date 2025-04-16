@@ -112,6 +112,12 @@ def determinePermutations(algorithms, options, rates):
         rate_config="rate-on"
     ))
 
+    combinations.append(Config(
+        optimize_config="def-ask",
+        join_config="default",
+        rate_config="rate-on"
+    ))
+
     # VoID + default w/ rate-limit for initialization
     combinations.append(Config(
         optimize_config="with-VoID",

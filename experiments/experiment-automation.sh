@@ -36,32 +36,32 @@ echo "Using next folder suffix:   $nextNumber"
 
 # -- With Service Clause workflow --
 
-echo "==> Starting With Service Clause workflow..."
-jbr init sparql-custom "default-service-${nextNumber}"
-mkdir "default-service-${nextNumber}/input/queries"
-python3 query_sort.py sib-swiss-federated-queries.json "default-service-${nextNumber}/" service
+# echo "==> Starting With Service Clause workflow..."
+# jbr init sparql-custom "default-service-${nextNumber}"
+# mkdir "default-service-${nextNumber}/input/queries"
+# python3 query_sort.py sib-swiss-federated-queries.json "default-service-${nextNumber}/" service
 
-cp -r ../config "default-service-${nextNumber}/input/config"
+# cp -r ../config "default-service-${nextNumber}/input/config"
 
-cd "default-service-${nextNumber}"
-jbr set-hook hookSparqlEndpoint sparql-endpoint-comunica
-cd ..
+# cd "default-service-${nextNumber}"
+# jbr set-hook hookSparqlEndpoint sparql-endpoint-comunica
+# cd ..
 
-python3 config_permutations.py "default-service-${nextNumber}/input/config/"
+# python3 config_permutations.py "default-service-${nextNumber}/input/config/"
 
-cd "default-service-${nextNumber}"
+# cd "default-service-${nextNumber}"
 
-npm run jbr -- prepare
+# npm run jbr -- prepare
 
-echo "default-service-${nextNumber} experiment has STARTED"
-nohup npm run jbr -- run > "default-service-${nextNumber}.log" 2>&1 &
-wait
-echo "default-service-${nextNumber} experiment has FINISHED"
+# echo "default-service-${nextNumber} experiment has STARTED"
+# nohup npm run jbr -- run > "default-service-${nextNumber}.log" 2>&1 &
+# wait
+# echo "default-service-${nextNumber} experiment has FINISHED"
 
-cd ..
+# cd ..
 
-echo "Workflow complete for: default-service-${nextNumber}"
-echo
+# echo "Workflow complete for: default-service-${nextNumber}"
+# echo
 
 # -- No-Service Clause workflow --
 

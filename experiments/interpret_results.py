@@ -25,8 +25,9 @@ def query_times(file_path, print_output):
             raw_name = str(row.get("name", "")).strip()
 
             # Extract number from name
+            # TODO: differentiate between 19 and 19...
             if raw_name == "emi#examples018_ns":
-                name = "18a"
+                name = "018e"
             else:    
                 match = re.search(r'\b(\d+[a-zA-Z]?)\b', raw_name)
                 if match is None:
@@ -311,7 +312,7 @@ def write_summary_to_file(query_times, sparql_endpoint_log, outfile):
             match_value = item.get('match', '')
             if len(match_value) > col_widths['match_max_width']:
                 if "emi#examples018" in match_value:
-                    match_value = "18a"
+                    match_value = "018e"
                 elif "emi#examples" in match_value:
                     match_value = match_value[len("emi#examples"):-3]
                 elif 'Q' in match_value:
