@@ -79,16 +79,16 @@ cd ..
 mkdir "no-service-${nextNumber}/input/client-config"
 python3 config_permutations.py "no-service-${nextNumber}/input/config/"
 
-# cd "no-service-${nextNumber}"
-# jbr generate-combinations
+cd "no-service-${nextNumber}"
+jbr generate-combinations
 
-# npm run jbr -- prepare
+npm run jbr -- prepare
 
-# echo "no-service-${nextNumber} experiment has STARTED"
-# nohup npm run jbr -- run > "no-service-${nextNumber}.log" 2>&1 &
-# wait
-# echo "no-service-${nextNumber} experiment has FINISHED"
+echo "no-service-${nextNumber} experiment has STARTED"
+nohup npm run jbr -- run > "no-service-${nextNumber}.log" 2>&1 &
+wait
+echo "no-service-${nextNumber} experiment has FINISHED"
 
-# cd ..
+cd ..
 
-# echo "Workflow complete for: no-service-${nextNumber}"
+echo "Workflow complete for: no-service-${nextNumber}"
