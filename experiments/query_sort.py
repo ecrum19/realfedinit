@@ -134,6 +134,23 @@ def withoutService(data, out_directory):
         "12", # UniProt stress
         "26", # UniProt stress
         "16", # UniProt stress
+        # biosoda problems
+        "emi#examples019b",
+        "emi#examples018",
+        "emi#examples012",
+        "emi#examples019a",
+        "emi#examples011a",
+        "emi#examples011b",
+        "emi#examples013",
+        "007",
+        "006",
+        "009",
+        "017",
+        "016",
+        "emi#examples021",
+        "emi#examples015",
+        "001",
+
     ]
 
     # Iterate over each item in the "data" dictionary.
