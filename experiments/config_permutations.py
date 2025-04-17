@@ -140,7 +140,7 @@ def writeClientConfigs(in_path, algorithm_names, option_names, rate_names, algoi
     """
     creates new client config files with the changes based on permutations
     """
-    default_config = "../config/default.json"
+    default_config = "../config/default-VoID.json"
     output_path = f"{in_path}client-config/"
     for combo in config_combos:
         # name of the current configs
