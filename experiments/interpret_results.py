@@ -342,7 +342,7 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output-file", required=False, help="Path to the output summary text file")
     args = parser.parse_args()
 
-    if args.sparql_endpoint and args.query_times:
+    if args.sparql_endpoint and args.query_times and args.output_file:
         total_queries = 0
         q = query_times(args.query_times, print_output=False)
         s = sparql_endpoint_comunica(args.sparql_endpoint, print_output=False)
@@ -377,4 +377,4 @@ if __name__ == "__main__":
     elif args.sparql_endpoint:
         s = sparql_endpoint_comunica(args.sparql_endpoint, print_output=True)
     else:
-        print("Please provide either --query-times or --sparql-endpoint.")
+        print("Please provide either --query-times (-q) or --sparql-endpoint (-s).")

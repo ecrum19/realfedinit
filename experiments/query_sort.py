@@ -125,7 +125,7 @@ def withoutService(data, out_directory):
         "40", # UniProt stress
         "43", # UniProt stress
         "45", # UniProt stress
-        "19_draft_human_metabolome", # UniProt stress\
+        "19_draft_human_metabolome", # UniProt stress
         "48", # UniProt stress
         "38", # UniProt stress
         "11", # UniProt stress
@@ -135,21 +135,21 @@ def withoutService(data, out_directory):
         "26", # UniProt stress
         "16", # UniProt stress
         # biosoda problems
-        "emi#examples019b",
-        "emi#examples018",
-        "emi#examples012",
-        "emi#examples019a",
-        "emi#examples011a",
-        "emi#examples011b",
-        "emi#examples013",
-        "007",
-        "006",
-        "009",
-        "017",
-        "016",
-        "emi#examples021",
-        "emi#examples015",
-        "001",
+        # "emi#examples019b",
+        # "emi#examples018",
+        # "emi#examples012",
+        # "emi#examples019a",
+        # "emi#examples011a",
+        # "emi#examples011b",
+        # "emi#examples013",
+        # "007",
+        # "006",
+        # "009",
+        # "017",
+        # "016",
+        # "emi#examples021",
+        # "emi#examples015",
+        # "001",
 
     ]
 
