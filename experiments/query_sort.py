@@ -115,7 +115,7 @@ def withoutService(data, out_directory):
         "52",  # IDSM
         "54",  # IDSM
         "60",  # IDSM
-        "002",    # IDSM
+        "002", # IDSM
         "18a", # IDSM
         "29", # UniProt stress
         "36", # UniProt stress
@@ -149,7 +149,7 @@ def withoutService(data, out_directory):
         # "016",
         # "emi#examples021",
         # "emi#examples015",
-        # "001",
+        "001",
 
     ]
 
