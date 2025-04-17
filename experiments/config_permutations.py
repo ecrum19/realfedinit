@@ -106,17 +106,17 @@ def determinePermutations(algorithms, options, rates):
     """
     combinations = []
     # default w/ rate-limit for initialization
-    combinations.append(Config(
-        optimize_config="def-count",
-        join_config="default",
-        rate_config="rate-on"
-    ))
+    # combinations.append(Config(
+    #     optimize_config="def-count",
+    #     join_config="default",
+    #     rate_config="rate-on"
+    # ))
 
-    combinations.append(Config(
-        optimize_config="def-ask",
-        join_config="default",
-        rate_config="rate-on"
-    ))
+    # combinations.append(Config(
+    #     optimize_config="def-ask",
+    #     join_config="default",
+    #     rate_config="rate-on"
+    # ))
 
     # VoID + default w/ rate-limit for initialization
     combinations.append(Config(
@@ -346,7 +346,7 @@ def changeDockerFile(current_docker_file):
     for line in lines:
         # changes Comunica version used
         if "FROM" in line:
-            updated_lines.append("FROM comunica/query-sparql@sha256:7b3d5ee38b320adc2912878ed58bcfec0f082cb3583d61c1417e03ea5ec53b3f\n")
+            updated_lines.append("FROM comunica/query-sparql@sha256:7c960547ca9779ee5c0af57038ce297af13777f686011ea15fb2f3158c9e57ce\n")
         # changes docker command to include "--contextOverride"
         elif "CMD" in line:
             updated_lines.append(
