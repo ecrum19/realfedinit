@@ -12,7 +12,7 @@ def execute_queries(directory_path):
     - cli_command_template: Command with '{}' as placeholder for the query.
     """
     for filename in os.listdir(directory_path):
-        if filename == "13_ns.rq":
+        if filename == "018_ns.rq":
             file_path = os.path.join(directory_path, filename)
             sources = getSources(open(file_path, 'r'))
             
