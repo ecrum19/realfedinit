@@ -117,23 +117,23 @@ def withoutService(data, out_directory):
         "60",  # IDSM
         "002", # IDSM
         "18a", # IDSM
-        "29", # UniProt stress
-        "36", # UniProt stress
-        "19", # UniProt stress
-        "42", # UniProt stress
-        #"13", # UniProt stress
-        "40", # UniProt stress
-        "43", # UniProt stress
-        "45", # UniProt stress
-        "19_draft_human_metabolome", # UniProt stress
-        "48", # UniProt stress
-        "38", # UniProt stress
-        "11", # UniProt stress
-        "53", # UniProt stress
-        "27", # UniProt stress
-        "12", # UniProt stress
-        "26", # UniProt stress
-        "16", # UniProt stress
+        # "29", # UniProt stress
+        # "36", # UniProt stress
+        # "19", # UniProt stress
+        # "42", # UniProt stress
+        # #"13", # UniProt stress
+        # "40", # UniProt stress
+        # "43", # UniProt stress
+        # "45", # UniProt stress
+        # "19_draft_human_metabolome", # UniProt stress
+        # "48", # UniProt stress
+        # "38", # UniProt stress
+        # "11", # UniProt stress
+        # "53", # UniProt stress
+        # "27", # UniProt stress
+        # "12", # UniProt stress
+        # "26", # UniProt stress
+        # "16", # UniProt stress
         # biosoda problems
         # "emi#examples019b",
         # "emi#examples018",
