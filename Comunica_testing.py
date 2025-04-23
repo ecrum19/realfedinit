@@ -11,8 +11,11 @@ def execute_queries(directory_path):
     - directory_path: Path to the directory containing query files.
     - cli_command_template: Command with '{}' as placeholder for the query.
     """
+
+    wanted = ['018_ns.rq', "001_ns.rq","3_ns.rq","5_ns.rq", "11_ns.rq"]
+
     for filename in os.listdir(directory_path):
-        if filename == "018_ns.rq":
+        if filename in wanted:
             file_path = os.path.join(directory_path, filename)
             sources = getSources(open(file_path, 'r'))
             
