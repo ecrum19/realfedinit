@@ -18,7 +18,8 @@ def execute_queries(directory_path):
         # Format the CLI command
         base_command = f"node ../comunica/engines/query-sparql/bin/query.js "
         for source in sources:
-            base_command += f"{source.strip('\n')} "
+            fixed_source = source.strip('\n')
+            base_command += f"{source} "
         
         base_command += f"-f {file_path} -t stats"
         try:
