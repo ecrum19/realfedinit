@@ -35,7 +35,7 @@ def getSources(query_file):
     This is a placeholder and should be replaced with actual logic to retrieve sources.
     """
     f = query_file.readlines()
-    return f[1].split("# Datasources: ")[1].split(' ')
+    return f[0].split("# Datasources: ")[1].split(' ')
 
 # Example usage
 if __name__ == "__main__":
