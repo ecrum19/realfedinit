@@ -38,6 +38,6 @@ def getSources(query_file):
 
 # Example usage
 if __name__ == "__main__":
-    queries_dir = "~/realfedinit/experiments/no-service-1/input/queries"
+    queries_dir = "~/realfedinit/experiments/no-service-1/input/queries/"
 
     execute_queries(queries_dir)
