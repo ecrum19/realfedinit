@@ -20,13 +20,13 @@ def execute_queries(directory_path):
             base_command += f"{source} "
         
         base_command += f"-f {file_path} -t stats"
-
-        try:
-            print(f"Executing: {base_command}")
-            result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
-            print("Output:\n", result.stdout)
-        except subprocess.CalledProcessError as e:
-            print(f"Error executing command for {filename}: {e.stderr}")
+        print(f"{base_command}")
+        # try:
+        #     print(f"Executing: {base_command}")
+        #     result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
+        #     print("Output:\n", result.stdout)
+        # except subprocess.CalledProcessError as e:
+        #     print(f"Error executing command for {filename}: {e.stderr}")
 
 def getSources(query_file):
     """
@@ -38,6 +38,6 @@ def getSources(query_file):
 
 # Example usage
 if __name__ == "__main__":
-    queries_dir = "experiments/input/queries"
+    queries_dir = "/experiments/input/queries"
 
     execute_queries(queries_dir)
