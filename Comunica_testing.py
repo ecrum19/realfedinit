@@ -11,7 +11,7 @@ def execute_queries(directory_path):
     - directory_path: Path to the directory containing query files.
     - cli_command_template: Command with '{}' as placeholder for the query.
     """
-    for filename in os.listdir(directory_path)[:1]:
+    for filename in os.listdir(directory_path):
         file_path = os.path.join(directory_path, filename)
         sources = getSources(open(file_path, 'r'))
         
