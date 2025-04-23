@@ -1,5 +1,6 @@
 import os
 import subprocess
+import argparse
 
 def execute_queries(directory_path):
     """
@@ -38,6 +39,8 @@ def getSources(query_file):
 
 # Example usage
 if __name__ == "__main__":
-    queries_dir = "~/realfedinit/experiments/no-service-1/input/queries/"
+    parser = argparse.ArgumentParser(description="Run Comunica tests script.")
+    parser.add_argument("-q", "--queries", type=str, required=True, help="Directory containing query files.")
+    args = parser.parse_args()
 
-    execute_queries(queries_dir)
+    execute_queries(args.queries)
