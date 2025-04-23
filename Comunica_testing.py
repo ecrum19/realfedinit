@@ -20,7 +20,7 @@ def execute_queries(directory_path):
         for source in sources:
             fixed_source = source.replace('\n', '')
             base_command += f"{source} "
-        print(base_command.split(""))
+        print(base_command.split(" "))
         
         base_command += f"-f {file_path} -t stats"
         try:
