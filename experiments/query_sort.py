@@ -121,7 +121,7 @@ def withoutService(data, out_directory):
         "36", # UniProt stress
         "19", # UniProt stress
         "42", # UniProt stress
-        "13", # UniProt stress
+        #"13", # UniProt stress
         "40", # UniProt stress
         "43", # UniProt stress
         "45", # UniProt stress
