@@ -23,7 +23,7 @@ def execute_queries(directory_path):
                     fixed_source = source.replace('\n', '')
                     base_command += f"{fixed_source} "
             
-            base_command += f"-f {file_path} -t stats"
+            base_command += f"-f {file_path} -t 'application/sparql-results+json'"
             try:
                 print(f"Executing: {base_command}")
                 result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
