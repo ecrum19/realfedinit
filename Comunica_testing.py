@@ -13,24 +13,23 @@ def execute_queries(directory_path):
     """
 
     for filename in os.listdir(directory_path):
-        if filename == "92_uniprot_bioregistry_iri_translation_ns.rq":
-            file_path = os.path.join(directory_path, filename)
-            sources = getSources(open(file_path, 'r'))
-            
-            # Format the CLI command
-            base_command = f"node ../comunica/engines/query-sparql/bin/query-dynamic.js "
-            for source in sources:
-                if source != "":
-                    fixed_source = source.replace('\n', '')
-                    base_command += f"{fixed_source} "
-            
-            base_command += f"-f {file_path} -t 'application/sparql-results+json'"
-            try:
-                print(f"Executing: {base_command}")
-                result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
-                print("Output:\n", result.stdout)
-            except subprocess.CalledProcessError as e:
-                print(f"Error executing command for {filename}: {e.stderr}")
+        file_path = os.path.join(directory_path, filename)
+        sources = getSources(open(file_path, 'r'))
+        
+        # Format the CLI command
+        base_command = f"node ../comunica/engines/query-sparql/bin/query-dynamic.js "
+        for source in sources:
+            if source != "":
+                fixed_source = source.replace('\n', '')
+                base_command += f"{fixed_source} "
+        
+        base_command += f"-f {file_path} -t 'application/sparql-results+json'"
+        try:
+            print(f"Executing: {base_command}")
+            result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
+            print("Output:\n", result.stdout)
+        except subprocess.CalledProcessError as e:
+            print(f"Error executing command for {filename}: {e.stderr}")
 
 def getSources(query_file):
     """
