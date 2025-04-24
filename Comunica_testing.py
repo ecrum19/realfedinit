@@ -13,7 +13,7 @@ def execute_queries(directory_path):
     """
 
     for filename in os.listdir(directory_path):
-        if filename == " experiments/no-service/input/queries/92_uniprot_bioregistry_iri_translation_ns.rq":
+        if filename == "92_uniprot_bioregistry_iri_translation_ns.rq":
             file_path = os.path.join(directory_path, filename)
             sources = getSources(open(file_path, 'r'))
             
