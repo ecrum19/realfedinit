@@ -255,6 +255,78 @@ def sparql_endpoint_comunica(file_path, print_output):
                     break
     return all_queries_sorted
 
+
+def parse_output_log(file_path, print_output=True):
+    """
+    Parse the output.log file to determine the status of each query execution.
+    Categorize results into errors, no results, or some results, and count HTTP requests if no errors are observed.
+    """
+    results = []
+
+    with open(file_path, 'r', encoding='utf-8') as log_file:
+        lines = log_file.readlines()
+
+    query_pattern = re.compile(r"Executing: .* -f (.+?) -t")
+    error_pattern = re.compile(r"Error executing command for (.+?): (.+)")
+    http_requests_pattern = re.compile(r"\"httpRequests\": (\d+)")
+    no_results_pattern = re.compile(r"\"results\": \{ \"bindings\": \[\] \}")
+
+    current_query = None
+    for line in lines:
+        query_match = query_pattern.search(line)
+        if query_match:
+            current_query = query_match.group(1).split("/")[-1]
+            continue
+
+        error_match = error_pattern.search(line)
+        if error_match and current_query:
+            results.append({
+                "query": current_query,
+                "status": "error",
+                "details": error_match.group(2).strip()
+            })
+            current_query = None
+            continue
+
+        no_results_match = no_results_pattern.search(line)
+        if no_results_match and current_query:
+            results.append({
+                "query": current_query,
+                "status": "no results",
+                "http_requests": 0
+            })
+            current_query = None
+            continue
+
+        http_requests_match = http_requests_pattern.search(line)
+        if http_requests_match and current_query:
+            results.append({
+                "query": current_query,
+                "status": "success",
+                "http_requests": int(http_requests_match.group(1))
+            })
+            current_query = None
+
+    results = sorted(results, key=lambda x: x['query'])
+
+    if print_output:
+        print(f"{'Query File':20} | {'Status':10} | {'HTTP Requests':10} | {'Details':30}")
+        print("-" * 100)
+        for result in results:
+            details_specific = result.get('details', 'N/A').split(':')
+            if len(details_specific) > 1:
+                print(f"{result['query'][:20]:20} | {result['status']:10} | {result.get('http_requests', 'N/A'):10} | {details_specific[-2]:30}")
+            else:
+                print(f"{result['query'][:20]:20} | {result['status']:10} | {result.get('http_requests', 'N/A'):10} | {details_specific[0]:30}")
+
+        print("-" * 100)
+        print(f"Total queries: {len(results)}")
+        print(f"Queries with errors: {sum(1 for r in results if r['status'] == 'error')}")
+        print(f"Queries with no results: {sum(1 for r in results if r['status'] == 'no results')}")
+        print(f"Queries with results: {sum(1 for r in results if r['status'] == 'success')}")
+    return results
+
+
 def normalize_query(query):
     """
     Normalize a query string by removing extra whitespace, line breaks, and ensuring consistent formatting.
@@ -339,7 +411,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parse experiment query-times.csv results.")
     parser.add_argument("-q", "--query-times", required=False, help="Path to the 'query-times.csv' file (semicolon-delimited)")
     parser.add_argument("-s", "--sparql-endpoint", required=False, help="Path to the '/logs/sparql-endpoint-comunica.txt' file (tab delimited)")
+    parser.add_argument("-c", "--comunica-cli", required=False, help="Path to the output file from a run of the Comunica CLI (tab delimited)")
     parser.add_argument("-o", "--output-file", required=False, help="Path to the output summary text file")
+
     args = parser.parse_args()
 
     if args.sparql_endpoint and args.query_times and args.output_file:
@@ -376,5 +450,7 @@ if __name__ == "__main__":
         q = query_times(args.query_times, print_output=True)
     elif args.sparql_endpoint:
         s = sparql_endpoint_comunica(args.sparql_endpoint, print_output=True)
+    elif args.comunica_cli:
+        c = parse_output_log(args.comunica_cli, print_output=True)
     else:
         print("Please provide either --query-times (-q) or --sparql-endpoint (-s).")

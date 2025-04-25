@@ -186,7 +186,9 @@ def withoutService(data, out_directory):
                         source = s.split(">")[0]
                         if "{" in source:
                             source = source[:-1].strip()
-                ns_query_source += " %s" % source
+                # avoid duplicate sources
+                if source not in ns_query_source:
+                    ns_query_source += " %s" % source
                 brace_count += 1
                 curr_service = True
                 ns_query_text += (tabs + "{\n")
