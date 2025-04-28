@@ -262,69 +262,113 @@ def parse_output_log(file_path, print_output=True):
     Categorize results into errors, no results, or some results, and count HTTP requests if no errors are observed.
     """
     results = []
+    current_query = None
 
     with open(file_path, 'r', encoding='utf-8') as log_file:
         lines = log_file.readlines()
 
-    query_pattern = re.compile(r"Executing: .* -f (.+?) -t")
-    error_pattern = re.compile(r"Error executing command for (.+?): (.+)")
-    http_requests_pattern = re.compile(r"\"httpRequests\": (\d+)")
-    no_results_pattern = re.compile(r"\"results\": \{ \"bindings\": \[\] \}")
+    # query_pattern = re.compile(r"Executing: .* -f (.+?) -t")
+    # error_pattern = re.compile(r"Error executing command for (.+?): (.+)")
+    # http_requests_pattern = re.compile(r"\"httpRequests\": (\d+)")
+    # no_results_pattern = re.compile(r"\"results\": \{ \"bindings\": \[\] \}")
 
-    current_query = None
-    for line in lines:
-        query_match = query_pattern.search(line)
-        if query_match:
-            current_query = query_match.group(1).split("/")[-1]
-            continue
+    i = 0
+    while i < len(lines):
+        line = lines[i].strip()
 
-        error_match = error_pattern.search(line)
-        if error_match and current_query:
-            results.append({
-                "query": current_query,
-                "status": "error",
-                "details": error_match.group(2).strip()
-            })
-            current_query = None
-            continue
+        if line.startswith("Executing: node"):
+            match = re.search(r'-f\s+([^\s]+)', line)
+            query_file = match.group(1).split('/')[-1] if match else "Unknown"
+            current_query = {"queryFile": query_file}
+            i += 1
 
-        no_results_match = no_results_pattern.search(line)
-        if no_results_match and current_query:
-            results.append({
-                "query": current_query,
-                "status": "no results",
-                "http_requests": 0
-            })
-            current_query = None
-            continue
+            while i < len(lines):
+                next_line = lines[i].strip()
+                if next_line.startswith("Output:"):
+                    i += 1
+                    json_content = ""
+                    while i < len(lines) and not lines[i].strip().startswith("Executing: node") and not lines[i].strip().startswith("Error executing command for"):
+                        json_content += lines[i].strip()
+                        i += 1
+                    try:
+                        data = json.loads(json_content)
+                        bindings = data.get("results", {}).get("bindings", [])
+                        http_requests = data.get("metadata", {}).get("httpRequests", None)
 
-        http_requests_match = http_requests_pattern.search(line)
-        if http_requests_match and current_query:
-            results.append({
-                "query": current_query,
-                "status": "success",
-                "http_requests": int(http_requests_match.group(1))
-            })
-            current_query = None
+                        current_query["status"] = "success"
+                        current_query["numberOfResults"] = len(bindings)
+                        current_query["numberOfHttpRequests"] = http_requests
+                        current_query["errorType"] = "N/A"
+                    except Exception as e:
+                        current_query["status"] = "error"
+                        current_query["errorType"] = "Malformed output"
+                    results.append(current_query)
+                    break
 
-    results = sorted(results, key=lambda x: x['query'])
+                elif next_line.startswith("Error executing command for"):
+                    error_block = ""
+                    while i < len(lines) and not lines[i].strip().startswith("Executing: node") and not lines[i].strip().startswith("Output:"):
+                        if not lines[i].strip().startswith("WARN"):
+                            error_block += lines[i]
+                        i += 1
 
+                    error_block_lower = error_block.lower()
+                    if "fetch failed" in error_block_lower:
+                        error_type = "fetch failed"
+                    elif "terminated" in error_block_lower:
+                        error_type = "terminated"
+                    elif "fatal error" in error_block_lower or "js stacktrace" in error_block_lower or "heap limit" in error_block_lower:
+                        error_type = "JS stacktrace"
+                    elif 'hangup' in error_block_lower:
+                        error_type = "Hangup"
+                    elif "504 gateway time-out" in error_block_lower:
+                        error_type = "HTTP 504 Gateway Timeout"
+                    elif '<!doctype html system "about:legacy-compat">' in error_block_lower:
+                        error_type = "Random UniProt error"
+                    elif "http status" in error_block_lower:
+                        status_match = re.search(r'\(HTTP status (\d+)\)', error_block)
+                        error_type = f"HTTP status {status_match.group(1)}" if status_match else "HTTP Error"
+                    else:
+                        error_type = "Other"
+
+                    current_query["status"] = "error"
+                    current_query["errorType"] = error_type
+                    results.append(current_query)
+                    break
+                else:
+                    i += 1
+        else:
+            i += 1
+
+    # results = sorted(results, key=lambda x: x['query'])
     if print_output:
-        print(f"{'Query File':20} | {'Status':10} | {'HTTP Requests':10} | {'Details':30}")
-        print("-" * 100)
-        for result in results:
-            details_specific = result.get('details', 'N/A').split(':')
-            if len(details_specific) > 1:
-                print(f"{result['query'][:20]:20} | {result['status']:10} | {result.get('http_requests', 'N/A'):10} | {details_specific[-2]:30}")
-            else:
-                print(f"{result['query'][:20]:20} | {result['status']:10} | {result.get('http_requests', 'N/A'):10} | {details_specific[0]:30}")
-
-        print("-" * 100)
-        print(f"Total queries: {len(results)}")
-        print(f"Queries with errors: {sum(1 for r in results if r['status'] == 'error')}")
-        print(f"Queries with no results: {sum(1 for r in results if r['status'] == 'no results')}")
-        print(f"Queries with results: {sum(1 for r in results if r['status'] == 'success')}")
+        print_summary(results)
     return results
+
+def extract_numeric_key(query_file):
+    match = re.match(r'(\d+)', query_file)
+    return int(match.group(1)) if match else float('inf')
+
+def print_summary(results):
+    sorted_results = sorted(results, key=lambda x: extract_numeric_key(x.get('queryFile', '')))
+
+    print(f"{'Query File':30} | {'Status':10} | {'HTTP Requests':15} | {'Results':10} | {'Error Code':30}")
+    print("-" * 130)
+    for result in sorted_results:
+        query_file = result.get('queryFile', 'Unknown')
+        status = result.get('status', 'Unknown')
+        http_requests = result.get('numberOfHttpRequests', 'N/A')
+        number_of_results = result.get('numberOfResults', 'N/A') if status == 'success' else 'N/A'
+        error_type = result.get('errorType', 'N/A')
+
+        print(f"{query_file[:30]:30} | {status:10} | {str(http_requests):15} | {str(number_of_results):10} | {error_type[:30]:30}")
+
+    print("-" * 130)
+    print(f"Total queries: {len(results)}")
+    print(f"Queries with errors: {sum(1 for r in results if r['status'] == 'error')}")
+    print(f"Queries with no results: {sum(1 for r in results if r.get('numberOfResults', 1) == 0 and r['status'] == 'success')}")
+    print(f"Queries with results: {sum(1 for r in results if r.get('numberOfResults', 0) > 0 and r['status'] == 'success')}")
+
 
 
 def normalize_query(query):

@@ -119,14 +119,14 @@ def withoutService(data, out_directory):
         "18a", # IDSM
         # "29", # UniProt stress
         # "36", # UniProt stress
-        "19", # UniProt stress
+        # "19", # UniProt stress
         # "42", # UniProt stress
         # #"13", # UniProt stress
         # "40", # UniProt stress
-        "43", # UniProt stress
-        "50", # stack-trace
-        "19", # weird UniProt error
-        "27", # stack-trace
+        # "43", # UniProt stress
+        # "50", # stack-trace
+        # "19", # weird UniProt error
+        # "27", # stack-trace
         # "45", # UniProt stress
         # "19_draft_human_metabolome", # UniProt stress
         # "48", # UniProt stress
@@ -152,7 +152,9 @@ def withoutService(data, out_directory):
         # "016",
         # "emi#examples021",
         # "emi#examples015",
-        "001",
+        # "001",
+        "38", # uniprot broken query
+        "49", # uniprot broken query
 
     ]
 
