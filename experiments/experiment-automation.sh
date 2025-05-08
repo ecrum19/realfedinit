@@ -54,7 +54,7 @@ echo "Using next folder suffix:   $nextNumber"
 # npm run jbr -- prepare
 
 # echo "default-service-${nextNumber} experiment has STARTED"
-# nohup npm run jbr -- run > "default-service-${nextNumber}.log" 2>&1 &
+# nohup npm run jbr -- run > "default-service-${nextNumber}.log"
 # wait
 # echo "default-service-${nextNumber} experiment has FINISHED"
 
@@ -85,7 +85,7 @@ jbr generate-combinations
 npm run jbr -- prepare
 
 echo "no-service-${nextNumber} experiment has STARTED"
-nohup npm run jbr -- run > "no-service-${nextNumber}.log" 2>&1 &
+nohup npm run jbr -- run > "no-service-${nextNumber}.log"
 wait
 echo "no-service-${nextNumber} experiment has FINISHED"
 
