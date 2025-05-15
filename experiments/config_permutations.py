@@ -2,8 +2,10 @@ import os
 import sys
 
 class Config:
-    def __init__(self, optimize_config, join_config, rate_config):
-        self.metadata_config = optimize_config
+    def __init__(self, optimize_config, void_config, source_identify, join_config, rate_config):
+        self.optimize_config = optimize_config
+        self.void_config = void_config
+        self.source_identify = source_identify
         self.join_config = join_config
         self.rate_config = rate_config
 
@@ -100,39 +102,47 @@ def new_config(current_config_path, new_option_line, new_algo_line, new_rate_lin
         f.writelines(updated_lines)
 
 
-def determinePermutations(algorithms, options, rates):
+def determinePermutations():
     """
     Returns all config file permutations as a list of Objects
     """
     combinations = []
-    # default w/ rate-limit for initialization
-    # combinations.append(Config(
-    #     optimize_config="def-count",
-    #     join_config="default",
-    #     rate_config="rate-on"
-    # ))
-
-    # combinations.append(Config(
-    #     optimize_config="def-ask",
-    #     join_config="default",
-    #     rate_config="rate-on"
-    # ))
-
-    # VoID + default w/ rate-limit for initialization
+    # FedX-ASK
     combinations.append(Config(
-        optimize_config="with-VoID",
+        optimize_config="def-ask",
+        use_void=False,
+        source_identify="card-ask",
         join_config="default",
         rate_config="rate-on"
     ))
 
-    # for r in rates:
-    #     for a in algorithms:
-    #         for o in options:
-    #             combinations.append(Config(
-    #                 optimize_config=o,
-    #                 join_config=a,
-    #                 rate_config=r
-    #             ))
+    # FedX-COUNT
+    combinations.append(Config(
+        optimize_config="def-count",
+        use_void=False,
+        source_identify="card-count",
+        join_config="default",
+        rate_config="rate-on"
+    ))
+
+    # SPLENDID-ASK
+    combinations.append(Config(
+        optimize_config="def-ask",
+        use_void=True,
+        source_identify="card-ask",
+        join_config="default",
+        rate_config="rate-on"
+    ))
+
+    # SPLENDID-COUNT
+    combinations.append(Config(
+        optimize_config="def-count",
+        use_void=True,
+        source_identify="card-count",
+        join_config="default",
+        rate_config="rate-on"
+    ))
+
     return combinations
 
 
@@ -144,12 +154,16 @@ def writeClientConfigs(in_path, algorithm_names, option_names, rate_names, algoi
     output_path = f"{in_path}client-config/"
     for combo in config_combos:
         # name of the current configs
-        wanted_option = combo.metadata_config
+        wanted_optimize = combo.optimize_config
+        wanted_void = combo.use_void
+        wanted_sourceid = combo.source_identify
         wanted_algo = combo.join_config
         wanted_rate = combo.rate_config
 
         # indexes of the current configs
-        option_index = option_names.index(wanted_option)
+        optimize_index = option_names.index(wanted_optimize)
+        void_index = 0 if wanted_void else -1
+        sourceid_index = option_names.index(wanted_sourceid) # TODO: need to fix this to make proper combinations ...
         algo_index = algorithm_names.index(wanted_algo)
         rate_index = rate_names.index(wanted_rate)
 
@@ -414,7 +428,7 @@ def main():
         algoNames = listConfigNames(algoFiles)
         optionNames = listConfigNames(optionFiles)
         rateNames = listConfigNames(rateFiles)
-        all_combos = determinePermutations(algoNames, optionNames, rateNames)
+        all_combos = determinePermutations()
         # for c in all_combos:
         #     print(c.metadata_config, c.join_config, c.rate_config)
         #     count += 1

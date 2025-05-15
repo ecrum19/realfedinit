@@ -47,3 +47,13 @@ http - rate-limit
 filterPushdown - aggresive-fp / default-fp
 
 default
+
+
+----
+
+Final Configs Used (all include: http/rate-on.json + rdf-join/default.json):
+
+FedX-ASK    =   default.json + query-source-identify-hypermedia/cardinality-ask.json + optimize-query-operation/def-ask.json
+FedX-COUNT  =   default.json + query-source-identify-hypermedia/cardinality-count.json + optimize-query-operation/def-count.json
+SPLENDID-ASK  =   default-VoID.json + query-source-identify-hypermedia/cardinality-ask.json + optimize-query-operation/def-ask.json
+SPLENDID-COUNT  =   default-VoID.json + query-source-identify-hypermedia/cardinality-count.json + optimize-query-operation/def-count.json
