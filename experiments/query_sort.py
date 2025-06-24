@@ -158,8 +158,8 @@ def withoutService(data, out_directory):
 
     ]
     included = [
-        "001_ns.rq",
-        "Q00000011_ns.rq"
+        "001",
+        "117_biosodafrontend_glioblastoma_orthologs_rat"
     ]
 
     # Iterate over each item in the "data" dictionary.
