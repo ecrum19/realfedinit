@@ -1,6 +1,7 @@
 import os
 import subprocess
 import argparse
+import datetime
 
 def execute_queries(directory_path):
     """
@@ -25,11 +26,17 @@ def execute_queries(directory_path):
         
         base_command += f"-f {file_path} -t 'application/sparql-results+json'"
         try:
+            start_time = datetime.datetime.now()
             print(f"Executing: {base_command}")
+            print(f"Timestamp (start): {start_time.isoformat()}")
             result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
             print("Output:\n", result.stdout)
+            end_time = datetime.datetime.now()
+            print(f"Timestamp (end): {end_time.isoformat()}")
         except subprocess.CalledProcessError as e:
             print(f"Error executing command for {filename}: {e.stderr}")
+            end_time = datetime.datetime.now()
+            print(f"Timestamp (end): {end_time.isoformat()}")
 
 def getSources(query_file):
     """

@@ -450,6 +450,47 @@ def write_summary_to_file(query_times, sparql_endpoint_log, outfile):
 
         print(f"Summary written to {outfile}")
 
+# TODO: fix this to make a better results table (with names like Rhea-13 / UniProt-70 / etc)
+def make_query_table(parse_results_file, queries_json_file, output_json_file):
+    """
+    Reads parse_results.txt and sib-swiss-federated-queries.json, and writes a JSON file where each key is the canonical query name and the value is a dict of the columns.
+    """
+    import json
+    import re
+    # Load the JSON mapping
+    with open(queries_json_file, 'r', encoding='utf-8') as f:
+        queries_json = json.load(f)
+    # Build a mapping from query file name (e.g., 51_ns.rq) to canonical name
+    file_to_canonical = {}
+    for canonical, entry in queries_json.get('data', {}).items():
+        match = re.search(r'/([\w#]+)(?:\.rq)?$', canonical)
+        if match:
+            file_name = match.group(1)
+            file_to_canonical[file_name + '_ns.rq'] = canonical
+            file_to_canonical[file_name + '.rq'] = canonical
+            file_to_canonical[file_name] = canonical
+    # Read parse_results.txt and build the dict
+    results_dict = {}
+    with open(parse_results_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            if re.match(r'^[\w#].*\|', line):
+                parts = [p.strip() for p in line.split('|')]
+                query_file = parts[0]
+                canonical = file_to_canonical.get(query_file, query_file)
+                # Map columns to keys
+                results_dict[canonical] = {
+                    "Status": parts[1],
+                    "HTTP Requests": parts[2],
+                    "Results": parts[3],
+                    "Error Code": parts[4]
+                }
+    # Write to output JSON file
+    with open(output_json_file, 'w', encoding='utf-8') as out:
+        json.dump(results_dict, out, indent=2)
+    print(f"Wrote {len(results_dict)} results to {output_json_file}")
+    return results_dict
+
+
 # usage
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Parse experiment query-times.csv results.")
