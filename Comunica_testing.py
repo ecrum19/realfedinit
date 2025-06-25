@@ -18,7 +18,7 @@ def execute_queries(directory_path):
         sources = getSources(open(file_path, 'r'))
         
         # Format the CLI command
-        base_command = f"node --max-old-space-size=10000 ../comunica/engines/query-sparql/bin/query-dynamic.js "
+        base_command = f"node ../comunica/engines/query-sparql/bin/query-dynamic.js "
         for source in sources:
             if source != "":
                 fixed_source = source.replace('\n', '')

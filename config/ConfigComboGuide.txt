@@ -69,11 +69,13 @@ Three different configs:
 
 -- (with COUNT -- VoID + COUNT) : default-VoID.json
     prune-empty-source-operations --> "useAskIfSupported": true
-    query-source-identify-hypermedia/actors#sparql --> "cardinalityCountQueries": true,
-    
+    query-source-identify-hypermedia/actors#sparql --> 
+        "cardinalityCountQueries": true,
+        "cardinalityEstimateConstruction": false,
+
 -- (no VoID) : default.json
     prune-empty-source-operations --> "useAskIfSupported": true
     query-source-identify-hypermedia/actors#sparql --> 
         "cardinalityCountQueries": true,
-        "cardinalityEstimateConstruction": false,
+        "cardinalityEstimateConstruction": flase,
 
