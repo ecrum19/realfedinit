@@ -48,7 +48,6 @@ filterPushdown - aggresive-fp / default-fp
 
 default
 
-
 ----
 
 Final Configs Used (all include: http/rate-on.json + rdf-join/default.json):
@@ -57,3 +56,24 @@ FedX-ASK    =   default.json + query-source-identify-hypermedia/cardinality-ask.
 FedX-COUNT  =   default.json + query-source-identify-hypermedia/cardinality-count.json + optimize-query-operation/def-count.json
 SPLENDID-ASK  =   default-VoID.json + query-source-identify-hypermedia/cardinality-ask.json + optimize-query-operation/def-ask.json
 SPLENDID-COUNT  =   default-VoID.json + query-source-identify-hypermedia/cardinality-count.json + optimize-query-operation/def-count.json
+
+-----
+
+
+Three different configs:
+-- (no COUNT -- only VoID) : 
+    prune-empty-source-operations --> "useAskIfSupported": true
+    query-source-identify-hypermedia/actors#sparql --> 
+        "cardinalityCountQueries": false,
+        "cardinalityEstimateConstruction": false,
+
+-- (with COUNT -- VoID + COUNT) : default-VoID.json
+    prune-empty-source-operations --> "useAskIfSupported": true
+    query-source-identify-hypermedia/actors#sparql --> "cardinalityCountQueries": true,
+    
+-- (no VoID) : default.json
+    prune-empty-source-operations --> "useAskIfSupported": true
+    query-source-identify-hypermedia/actors#sparql --> 
+        "cardinalityCountQueries": true,
+        "cardinalityEstimateConstruction": false,
+

@@ -249,7 +249,7 @@ def withoutService(data, out_directory):
         ns_output_filename = f"{base_name}_ns.rq"
         ns_full_output_path = os.path.join(output_dir_ns, ns_output_filename)
 
-        if str(base_name) in included:
+        if str(base_name) not in excluded:
             total += 1
             # for without SERVICE descriptions
             try:
