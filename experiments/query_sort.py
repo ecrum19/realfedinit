@@ -117,7 +117,6 @@ def withoutService(data, out_directory):
         "60",  # IDSM
         "002", # IDSM
         "18a", # IDSM
-        "019",
         # "29", # UniProt stress
         # "36", # UniProt stress
         # "19", # UniProt stress
