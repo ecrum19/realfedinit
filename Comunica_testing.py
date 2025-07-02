@@ -33,6 +33,10 @@ def execute_queries(directory_path):
             print("Output:\n", result.stdout)
             end_time = datetime.datetime.now()
             print(f"Timestamp (end): {end_time.isoformat()}")
+        except subprocess.TimeoutExpired:
+            print(f"Timeout occurred on query {filename}: Skipping to next.")
+            end_time = datetime.datetime.now()
+            print(f"Timestamp (end): {end_time.isoformat()}")
         except subprocess.CalledProcessError as e:
             print(f"Error executing command for {filename}: {e.stderr}")
             end_time = datetime.datetime.now()
