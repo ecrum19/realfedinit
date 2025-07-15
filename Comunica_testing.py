@@ -29,12 +29,8 @@ def execute_queries(directory_path):
             start_time = datetime.datetime.now()
             print(f"Executing: {base_command}")
             print(f"Timestamp (start): {start_time.isoformat()}")
-            result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True, timeout=600)
+            result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
             print("Output:\n", result.stdout)
-            end_time = datetime.datetime.now()
-            print(f"Timestamp (end): {end_time.isoformat()}")
-        except subprocess.TimeoutExpired:
-            print(f"Timeout occurred on query {filename}: Skipping to next.")
             end_time = datetime.datetime.now()
             print(f"Timestamp (end): {end_time.isoformat()}")
         except subprocess.CalledProcessError as e:
