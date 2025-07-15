@@ -28,8 +28,8 @@ def execute_queries(directory_path):
         start_time = datetime.datetime.now()
         print(f"Executing: {base_command}")
         print(f"Timestamp (start): {start_time.isoformat()}")
-        result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
         try:
+            result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
             print("Output:\n", result.stdout)
         except subprocess.CalledProcessError as e:
             print(f"Error executing command for {filename}: {e.stderr}")
