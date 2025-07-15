@@ -13,28 +13,28 @@ def execute_queries(directory_path):
     - cli_command_template: Command with '{}' as placeholder for the query.
     """
 
-    for filename in os.listdir(directory_path):
-        file_path = os.path.join(directory_path, filename)
-        sources = getSources(open(file_path, 'r'))
-        
-        # Format the CLI command
-        base_command = f"node ../comunica/engines/query-sparql/bin/query-dynamic.js "
-        for source in sources:
-            if source != "":
-                fixed_source = source.replace('\n', '')
-                base_command += f"{fixed_source} "
-        
-        base_command += f"-f {file_path} -t 'application/sparql-results+json' --httpRetryCount=2"
-        start_time = datetime.datetime.now()
-        print(f"Executing: {base_command}")
-        print(f"Timestamp (start): {start_time.isoformat()}")
-        try:
-            result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
-            print("Output:\n", result.stdout)
-        except subprocess.CalledProcessError as e:
-            print(f"Error executing command for {filename}: {e.stderr}")
-        end_time = datetime.datetime.now()
-        print(f"Timestamp (end): {end_time.isoformat()}")
+    output_log_path = os.path.join(os.getcwd(), "output.log")
+    with open(output_log_path, "a", encoding="utf-8") as log_file:
+        for filename in os.listdir(directory_path):
+            file_path = os.path.join(directory_path, filename)
+            sources = getSources(open(file_path, 'r'))
+            # Format the CLI command
+            base_command = f"node ../comunica/engines/query-sparql/bin/query-dynamic.js "
+            for source in sources:
+                if source != "":
+                    fixed_source = source.replace('\n', '')
+                    base_command += f"{fixed_source} "
+            base_command += f"-f {file_path} -t 'application/sparql-results+json' --httpRetryCount=2"
+            start_time = datetime.datetime.now()
+            log_file.write(f"Executing: {base_command}\n")
+            log_file.write(f"Timestamp (start): {start_time.isoformat()}\n")
+            try:
+                result = subprocess.run(base_command, shell=True, check=True, text=True, capture_output=True)
+                log_file.write("Output:\n" + result.stdout + "\n")
+            except subprocess.CalledProcessError as e:
+                log_file.write(f"Error executing command for {filename}: {e.stderr}\n")
+            end_time = datetime.datetime.now()
+            log_file.write(f"Timestamp (end): {end_time.isoformat()}\n\n")
         
 
 def getSources(query_file):
