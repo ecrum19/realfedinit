@@ -2,6 +2,7 @@ import os
 import subprocess
 import argparse
 import datetime
+import time
 
 def execute_queries(directory_path):
     """
@@ -39,6 +40,8 @@ def execute_queries(directory_path):
             log_file.write(f"Timestamp (end): {end_time.isoformat()}\n\n")
             print(f"Finished with query {n}/53: {filename}")
             n += 1
+            time.sleep(1)
+            print("\nShort 1 second break between queries\n")
 
 def getSources(query_file):
     """

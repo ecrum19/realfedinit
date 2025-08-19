@@ -61,19 +61,19 @@ SPLENDID-COUNT  =   default-VoID.json + query-source-identify-hypermedia/cardina
 
 
 Three different configs:
--- (no COUNT -- only VoID) : 
+EX1 -- (no COUNT -- only VoID) : default-VoID.json
     prune-empty-source-operations --> "useAskIfSupported": true
     query-source-identify-hypermedia/actors#sparql --> 
         "cardinalityCountQueries": false,
         "cardinalityEstimateConstruction": false,
 
--- (with COUNT -- VoID + COUNT) : default-VoID.json
+EX2 -- (with COUNT -- VoID + COUNT) : default-VoID.json
     prune-empty-source-operations --> "useAskIfSupported": true
     query-source-identify-hypermedia/actors#sparql --> 
         "cardinalityCountQueries": true,
         "cardinalityEstimateConstruction": false,
 
--- (no VoID) : default.json
+EX3 -- (no VoID) : default.json
     prune-empty-source-operations --> "useAskIfSupported": true
     query-source-identify-hypermedia/actors#sparql --> 
         "cardinalityCountQueries": true,
