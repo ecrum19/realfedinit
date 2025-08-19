@@ -60,6 +60,25 @@ SPLENDID-COUNT  =   default-VoID.json + query-source-identify-hypermedia/cardina
 -----
 
 
+Things to change to make custom Comunica configs work:
+
+engines/query-sparql/config/config-default.json
+    (point to custom config file)
+
+(EX1)
+engines/query-sparql-config/config-count-v4-3-0.json
+    (use VoID and without COUNT queries)
+
+(EX2)
+engines/query-sparql-config/config-count-v4-3-0.json
+    (use VoID and allow COUNT queries)
+
+(EX3)
+engines/query-sparql-config/config-default.json
+    (no VoID configs)
+
+
+
 Three different configs:
 EX1 -- (no COUNT -- only VoID) : default-VoID.json
     prune-empty-source-operations --> "useAskIfSupported": true
